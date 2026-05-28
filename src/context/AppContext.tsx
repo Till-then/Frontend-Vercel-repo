@@ -1,9 +1,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-<<<<<<< HEAD
 import { Post, MOCK_POSTS } from '../data/mockData';
-=======
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
 export interface User {
   id: number;
@@ -28,7 +25,6 @@ interface AppContextType {
   login: (username: string, password: string) => boolean;
   register: (data: any) => boolean;
   logout: () => void;
-<<<<<<< HEAD
   updateUser: (data: Partial<User>) => void;
   
   // Follow
@@ -42,13 +38,6 @@ interface AppContextType {
   addPost: (content: string, images: string[]) => void;
   deletePost: (postId: string) => void;
   toggleLike: (postId: string) => void;
-=======
-  
-  // Follow
-  following: number[];
-  toggleFollow: (userId: number) => void;
-  isFollowing: (userId: number) => boolean;
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -60,15 +49,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   
   // Auth State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-<<<<<<< HEAD
   const [following, setFollowing] = useState<number[]>([101]);
   const [followers, setFollowers] = useState<number[]>([102]);
 
   // Posts State
   const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
-=======
-  const [following, setFollowing] = useState<number[]>([]);
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => 
@@ -83,10 +68,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const login = (username: string, password: string): boolean => {
-<<<<<<< HEAD
-=======
-    // Demo login logic
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     if (username === 'admin' && password === 'admin123') {
       const user: User = {
         id: 0,
@@ -135,15 +116,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setCurrentUser(null);
   };
 
-<<<<<<< HEAD
   const updateUser = (data: Partial<User>) => {
     if (currentUser) {
       setCurrentUser({ ...currentUser, ...data });
     }
   };
 
-=======
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   const toggleFollow = (userId: number) => {
     setFollowing(prev => 
       prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
@@ -152,7 +130,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const isFollowing = (userId: number) => following.includes(userId);
 
-<<<<<<< HEAD
   const addPost = (content: string, images: string[]) => {
     if (!currentUser) return;
     const newPost: Post = {
@@ -187,13 +164,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       selectedCity,
       setSelectedCity,
       favorites,
-=======
-  return (
-    <AppContext.Provider value={{ 
-      selectedCity, 
-      setSelectedCity, 
-      favorites, 
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
       toggleFavorite,
       reminders,
       toggleReminder,
@@ -201,7 +171,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       login,
       register,
       logout,
-<<<<<<< HEAD
       updateUser,
       following,
       followers,
@@ -211,11 +180,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       addPost,
       deletePost,
       toggleLike
-=======
-      following,
-      toggleFollow,
-      isFollowing
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     }}>
       {children}
     </AppContext.Provider>
@@ -224,11 +188,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
-<<<<<<< HEAD
   if (context === undefined) {
-=======
-  if (!context) {
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     throw new Error('useAppContext must be used within an AppProvider');
   }
   return context;

@@ -9,7 +9,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SHOWS, CITIES } from '../data/mockData';
 import { ShowCard } from '../components/ShowCard';
@@ -19,15 +18,6 @@ import SearchWithSuggestions from '../components/SearchWithSuggestions';
 const ShowList: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-=======
-import { useLocation } from 'react-router-dom';
-import { SHOWS, CITIES } from '../data/mockData';
-import { ShowCard } from '../components/ShowCard';
-import { Search, Filter, MapPin, Calendar, ChevronDown, Music2, Ticket, Mic2, Music, TrendingUp, Zap, Camera } from 'lucide-react';
-
-const ShowList: React.FC = () => {
-  const location = useLocation();
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   const queryParams = new URLSearchParams(location.search);
   const initialType = queryParams.get('type') || '全部';
 
@@ -48,7 +38,6 @@ const ShowList: React.FC = () => {
     return matchesSearch && matchesType && matchesCity && matchesStatus;
   });
 
-<<<<<<< HEAD
   const suggestions = SHOWS.filter(show => 
     show.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     show.artist.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,8 +49,6 @@ const ShowList: React.FC = () => {
     data: show
   }));
 
-=======
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   return (
     <div className="space-y-12">
       {/* Header & Search */}
@@ -71,7 +58,6 @@ const ShowList: React.FC = () => {
           <p className="text-gray-500 text-lg">在长三角，发现你最期待的现场体验</p>
         </div>
 
-<<<<<<< HEAD
         <div className="max-w-4xl mx-auto">
           <SearchWithSuggestions
             placeholder="搜索演出名称、艺人、场馆或城市..."
@@ -80,16 +66,6 @@ const ShowList: React.FC = () => {
             onSuggestionClick={(s) => navigate(`/shows/${s.id}`)}
             className="h-20"
             inputClassName="text-xl pl-16 rounded-3xl shadow-xl shadow-primary/5"
-=======
-        <div className="max-w-4xl mx-auto relative group">
-          <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={24} />
-          <input 
-            type="text" 
-            placeholder="搜索演出名称、艺人、场馆或城市..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-20 pl-20 pr-8 bg-white border border-gray-100 rounded-3xl text-xl shadow-xl shadow-primary/5 focus:outline-none focus:border-primary/50 transition-all"
->>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           />
         </div>
       </div>
