@@ -17,11 +17,14 @@
     { "path": "/profile/reminders", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/itineraries", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/tickets", "src": "src/pages/ProfileSubPages.tsx" },
+<<<<<<< HEAD
     { "path": "/profile/favorites", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/following", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/reviews", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/security", "src": "src/pages/ProfileSubPages.tsx" },
     { "path": "/profile/help", "src": "src/pages/ProfileSubPages.tsx" },
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     { "path": "/login", "src": "src/pages/Login.tsx" },
     { "path": "/register", "src": "src/pages/Register.tsx" },
     { "path": "/admin", "src": "src/pages/AdminDashboard.tsx" },
@@ -33,7 +36,11 @@
   "components": [
     { "name": "Layout", "src": "src/components/Layout.tsx" },
     { "name": "AdminLayout", "src": "src/components/AdminLayout.tsx" },
+<<<<<<< HEAD
     { "name": "ShowCard", "src": "src/components/ShowCard.tsx" },
     { "name": "SearchInput", "src": "src/components/SearchInput.tsx" }
+=======
+    { "name": "ShowCard", "src": "src/components/ShowCard.tsx" }
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   ]
 }

@@ -15,7 +15,10 @@ import React, { useState } from 'react';
 import { Search, Filter, MapPin, Calendar, Users, MessageSquare, Plus, ArrowLeft, ChevronRight, Music2, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+<<<<<<< HEAD
 import SearchWithSuggestions from '../components/SearchWithSuggestions';
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
 const FindBuddies: React.FC = () => {
   const { isFollowing, toggleFollow } = useAppContext();
@@ -50,6 +53,7 @@ const FindBuddies: React.FC = () => {
     }
   ];
 
+<<<<<<< HEAD
   const suggestions = buddies.filter(b => 
     b.show.toLowerCase().includes(searchTerm.toLowerCase()) || 
     b.username.toLowerCase().includes(searchTerm.toLowerCase())
@@ -61,6 +65,8 @@ const FindBuddies: React.FC = () => {
     data: b
   }));
 
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   return (
     <div className="space-y-12">
       <div className="flex items-center gap-4">
@@ -71,6 +77,7 @@ const FindBuddies: React.FC = () => {
       </div>
 
       <div className="bg-primary/5 -mx-6 px-6 py-12 rounded-[48px] flex flex-col md:flex-row gap-6 items-center">
+<<<<<<< HEAD
         <div className="flex-1 w-full">
           <SearchWithSuggestions
             placeholder="搜索演出名称或关键词..."
@@ -79,6 +86,16 @@ const FindBuddies: React.FC = () => {
             onSuggestionClick={(s) => setSearchTerm(s.title)}
             className="h-16"
             inputClassName="text-lg pl-12 rounded-2xl shadow-xl shadow-primary/5"
+=======
+        <div className="relative flex-1 group">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
+          <input 
+            type="text" 
+            placeholder="搜索演出名称或关键词..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full h-16 pl-16 pr-6 bg-white border border-gray-100 rounded-2xl text-lg shadow-xl shadow-primary/5 focus:outline-none focus:border-primary/50 transition-all"
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           />
         </div>
         <button className="px-8 h-16 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/20 hover:bg-primary-hover transition-all flex items-center gap-3">

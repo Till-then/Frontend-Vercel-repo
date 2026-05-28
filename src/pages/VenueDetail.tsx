@@ -11,7 +11,10 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { VENUES } from '../data/mockData';
+<<<<<<< HEAD
 import { useAppContext } from '../context/AppContext';
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 import { 
   Bus, 
   MapPin, 
@@ -25,12 +28,16 @@ import {
   Utensils, 
   Hotel,
   Music2,
+<<<<<<< HEAD
   Users,
   MessageSquare,
   Calendar,
   Building2,
   CheckCircle2,
   Heart
+=======
+  Users
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 } from 'lucide-react';
 
 const VenueDetail: React.FC = () => {
@@ -38,11 +45,14 @@ const VenueDetail: React.FC = () => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
   const venue = VENUES.find(v => v.id === id) || VENUES[0];
+<<<<<<< HEAD
   const { posts } = useAppContext();
 
   const relatedPosts = posts.filter(post => 
     post.content.toLowerCase().includes(venue.name.toLowerCase())
   );
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
   return (
     <div className="space-y-12 pb-24">
@@ -74,6 +84,7 @@ const VenueDetail: React.FC = () => {
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Venue Introduction */}
       <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="bg-white p-10 rounded-[48px] border border-gray-100 shadow-xl shadow-primary/5 space-y-8">
@@ -128,6 +139,8 @@ const VenueDetail: React.FC = () => {
         </div>
       </section>
 
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Left Content */}
         <div className="lg:col-span-8 space-y-12">
@@ -262,6 +275,7 @@ const VenueDetail: React.FC = () => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
 
       {/* Related Discussions */}
       <section className="space-y-8">
@@ -301,6 +315,8 @@ const VenueDetail: React.FC = () => {
           </div>
         )}
       </section>
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     </div>
   );
 };

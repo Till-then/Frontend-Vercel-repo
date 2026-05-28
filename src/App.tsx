@@ -4,7 +4,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider, useAppContext } from './context/AppContext';
 import Layout from './components/Layout';
 import AdminLayout from './components/AdminLayout';
+<<<<<<< HEAD
 import { Toaster } from 'sonner';
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
 // Pages
 import Home from './pages/Home';
@@ -19,6 +22,7 @@ import SocialSquare from './pages/SocialSquare';
 import FindBuddies from './pages/FindBuddies';
 import TicketMarket from './pages/TicketMarket';
 import Profile from './pages/Profile';
+<<<<<<< HEAD
 import { 
   MyOrders, 
   MyReminders, 
@@ -30,6 +34,9 @@ import {
   AccountSecurity,
   HelpFeedback
 } from './pages/ProfileSubPages';
+=======
+import { MyOrders, MyReminders, MyItineraries, MyTickets } from './pages/ProfileSubPages';
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -51,7 +58,10 @@ const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const App: React.FC = () => {
   return (
     <AppProvider>
+<<<<<<< HEAD
       <Toaster position="top-center" richColors />
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
       <Routes>
           {/* Public & User Routes */}
           <Route element={<Layout />}>
@@ -67,17 +77,23 @@ const App: React.FC = () => {
             <Route path="/social/buddies" element={<FindBuddies />} />
             <Route path="/social/tickets" element={<TicketMarket />} />
             <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
             
             {/* Profile Sub Pages */}
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
             <Route path="/profile/orders" element={<MyOrders />} />
             <Route path="/profile/reminders" element={<MyReminders />} />
             <Route path="/profile/itineraries" element={<MyItineraries />} />
             <Route path="/profile/tickets" element={<MyTickets />} />
+<<<<<<< HEAD
             <Route path="/profile/favorites" element={<MyFavorites />} />
             <Route path="/profile/following" element={<MyFollowing />} />
             <Route path="/profile/reviews" element={<MyReviews />} />
             <Route path="/profile/security" element={<AccountSecurity />} />
             <Route path="/profile/help" element={<HelpFeedback />} />
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           </Route>
 
           {/* Auth Routes */}

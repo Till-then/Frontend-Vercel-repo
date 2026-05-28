@@ -4,11 +4,19 @@
  * LiveJoy RESTful API 接口文档注释
  * ========================================
  *
+<<<<<<< HEAD
  * === 管理后台扩展 ===
  * GET    /api/admin/shows            - 获取所有演出
  * POST   /api/admin/shows            - 新增演出（弹窗）
  * PUT    /api/admin/shows/:id        - 编辑演出（弹窗）
  * DELETE /api/admin/shows/:id        - 删除演出
+=======
+ * === 演出模块 (Show Service) ===
+ * GET    /api/shows               - 获取演出列表（支持搜索、筛选、分页）
+ * POST   /api/shows               - 新增演出（管理员）
+ * PUT    /api/shows/:id           - 更新演出信息（管理员）
+ * DELETE /api/shows/:id           - 删除演出（管理员）
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
  */
 
 import React, { useState } from 'react';
@@ -18,16 +26,24 @@ import {
   Edit, 
   Trash2, 
   Filter,
+<<<<<<< HEAD
   X,
   Upload,
   CheckCircle2
 } from 'lucide-react';
 import { SHOWS, Show, CITIES } from '../data/mockData';
 import { toast } from 'sonner';
+=======
+  MoreVertical,
+  ExternalLink
+} from 'lucide-react';
+import { SHOWS, Show } from '../data/mockData';
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
 const AdminShows: React.FC = () => {
   const [shows, setShows] = useState<Show[]>(SHOWS);
   const [searchTerm, setSearchTerm] = useState('');
+<<<<<<< HEAD
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingShow, setEditingShow] = useState<Show | null>(null);
 
@@ -44,12 +60,15 @@ const AdminShows: React.FC = () => {
     image: 'https://modao.cc/agent-py/media/generated_images/2026-05-28/c3daff8de6e9496d9b9d53a7f94179d5.jpg#desc=Poster',
     description: ''
   });
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
   const filteredShows = shows.filter(s => 
     s.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.artist.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+<<<<<<< HEAD
   const handleOpenModal = (show?: Show) => {
     if (show) {
       setEditingShow(show);
@@ -98,6 +117,11 @@ const AdminShows: React.FC = () => {
     if (window.confirm('确定要删除这场演出吗？')) {
       setShows(shows.filter(s => s.id !== id));
       toast.success('演出已删除');
+=======
+  const handleDelete = (id: string) => {
+    if (window.confirm('确定要删除这场演出吗？')) {
+      setShows(shows.filter(s => s.id !== id));
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     }
   };
 
@@ -106,12 +130,18 @@ const AdminShows: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900">演出管理</h1>
+<<<<<<< HEAD
           <p className="text-gray-500 mt-1">管理平台上的所有演出信息，支持弹窗式新增与编辑。</p>
         </div>
         <button 
           onClick={() => handleOpenModal()}
           className="flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all"
         >
+=======
+          <p className="text-gray-500 mt-1">管理平台上的所有演出信息，包括新增、编辑和下架操作。</p>
+        </div>
+        <button className="flex items-center gap-2 px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all">
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           <Plus size={20} />
           新增演出
         </button>
@@ -134,6 +164,12 @@ const AdminShows: React.FC = () => {
             <Filter size={16} />
             筛选
           </button>
+<<<<<<< HEAD
+=======
+          <button className="flex-1 md:flex-none px-4 py-2.5 bg-gray-50 text-gray-600 font-medium rounded-lg border border-gray-200 hover:bg-gray-100 transition-all">
+            导出数据
+          </button>
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
         </div>
       </div>
 
@@ -164,6 +200,7 @@ const AdminShows: React.FC = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4">
+<<<<<<< HEAD
                     <p className="text-sm font-bold text-gray-700">{show.city}</p>
                     <p className="text-xs text-gray-500 mt-1">{show.venue}</p>
                   </td>
@@ -174,6 +211,18 @@ const AdminShows: React.FC = () => {
                     <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
                       show.status === '售票中' ? 'bg-emerald-50 text-emerald-600' :
                       show.status === '即将开票' ? 'bg-amber-50 text-amber-600' :
+=======
+                    <p className="text-sm font-medium text-gray-900">{show.city}</p>
+                    <p className="text-xs text-gray-500 mt-1">{show.venue}</p>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="text-sm text-gray-600">{show.date}</p>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                      show.status === '售票中' ? 'bg-emerald-100 text-emerald-600' :
+                      show.status === '即将开票' ? 'bg-blue-100 text-blue-600' :
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
                       'bg-gray-100 text-gray-500'
                     }`}>
                       {show.status}
@@ -181,18 +230,33 @@ const AdminShows: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
+<<<<<<< HEAD
                       <button 
                         onClick={() => handleOpenModal(show)}
                         className="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
                       >
+=======
+                      <button className="p-2 text-gray-400 hover:text-primary transition-colors" title="编辑">
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
                         <Edit size={18} />
                       </button>
                       <button 
                         onClick={() => handleDelete(show.id)}
+<<<<<<< HEAD
                         className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                       >
                         <Trash2 size={18} />
                       </button>
+=======
+                        className="p-2 text-gray-400 hover:text-red-500 transition-colors" 
+                        title="删除"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                      <button className="p-2 text-gray-400 hover:text-gray-900 transition-colors">
+                        <MoreVertical size={18} />
+                      </button>
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
                     </div>
                   </td>
                 </tr>
@@ -200,6 +264,7 @@ const AdminShows: React.FC = () => {
             </tbody>
           </table>
         </div>
+<<<<<<< HEAD
       </div>
 
       {/* Modal */}
@@ -344,6 +409,25 @@ const AdminShows: React.FC = () => {
           </div>
         </div>
       )}
+=======
+        {filteredShows.length === 0 && (
+          <div className="py-20 text-center">
+            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search size={32} className="text-gray-300" />
+            </div>
+            <p className="text-gray-500">未找到相关演出</p>
+          </div>
+        )}
+        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+          <span>共 {filteredShows.length} 条数据</span>
+          <div className="flex items-center gap-2">
+            <button className="px-3 py-1 bg-white border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-50" disabled>上一页</button>
+            <button className="px-3 py-1 bg-primary text-white rounded">1</button>
+            <button className="px-3 py-1 bg-white border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-50" disabled>下一页</button>
+          </div>
+        </div>
+      </div>
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
     </div>
   );
 };

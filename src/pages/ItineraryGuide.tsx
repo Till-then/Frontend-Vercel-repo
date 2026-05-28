@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 const ItineraryGuide: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+<<<<<<< HEAD
   const [selectedPrefs, setSelectedPrefs] = useState<string[]>(['深度游玩']);
 
   const togglePref = (tag: string) => {
@@ -22,6 +23,8 @@ const ItineraryGuide: React.FC = () => {
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
   };
+=======
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
 
   const handleGenerate = () => {
     setLoading(true);
@@ -80,6 +83,7 @@ const ItineraryGuide: React.FC = () => {
             <div className="space-y-4">
               <label className="text-sm font-black text-gray-400 uppercase tracking-widest ml-2">偏好设置</label>
               <div className="flex flex-wrap gap-3">
+<<<<<<< HEAD
                 {['深度游玩', '特种兵行程', '美食优先', '亲子友好', '高性价比'].map(tag => {
                   const isActive = selectedPrefs.includes(tag);
                   return (
@@ -96,6 +100,13 @@ const ItineraryGuide: React.FC = () => {
                     </button>
                   );
                 })}
+=======
+                {['深度游玩', '特种兵行程', '美食优先', '亲子友好', '高性价比'].map(tag => (
+                  <button key={tag} className="px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold text-gray-500 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all">
+                    {tag}
+                  </button>
+                ))}
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
               </div>
             </div>
           </div>

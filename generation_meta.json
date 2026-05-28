@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "project_path": "performance-guide-app_v4.react",
+=======
+  "project_path": "performance-guide-app_v3.react",
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   "framework": "shadcn_style",
   "ui_framework": "shadcn_style",
   "theme_color": "auto",

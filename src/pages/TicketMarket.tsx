@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Search, Filter, Ticket, MapPin, ChevronRight, ArrowLeft, ShieldCheck, Plus, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -27,6 +28,29 @@ const TicketMarket: React.FC = () => {
     data: ticket
   }));
 
+=======
+/**
+ * ========================================
+ * LiveJoy RESTful API 接口文档注释
+ * ========================================
+ *
+ * === 票务模块 (Ticket Service) ===
+ * GET    /api/tickets             - 获取二手票务列表
+ * POST   /api/tickets             - 发布票务信息
+ * DELETE /api/tickets/:id           - 删除票务信息
+ */
+
+import React from 'react';
+import { Search, Filter, Ticket, MapPin, ChevronRight, ArrowLeft, ShieldCheck, Plus, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const TicketMarket: React.FC = () => {
+  const tickets = [
+    { id: 1, show: '周杰伦南京站', date: '10.26', price: 1200, originalPrice: 980, type: '看台', status: '转让中' },
+    { id: 2, show: '告五人上海站', date: '09.15', price: 680, originalPrice: 680, type: '内场', status: '转让中' },
+  ];
+
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
   return (
     <div className="space-y-12">
       <div className="flex items-center gap-4">
@@ -36,17 +60,26 @@ const TicketMarket: React.FC = () => {
         <h1 className="text-4xl font-black text-gray-900">票务集市</h1>
       </div>
 
+<<<<<<< HEAD
       <div className="p-6 bg-orange-50 border border-orange-100 rounded-3xl flex items-start gap-4">
         <AlertTriangle className="text-orange-500 flex-shrink-0" size={24} />
         <div className="space-y-1">
           <h4 className="font-bold text-orange-700">安全提醒</h4>
           <p className="text-sm text-orange-600 leading-relaxed">
+=======
+      <div className="p-6 bg-brand-amber/10 border border-brand-amber/20 rounded-3xl flex items-start gap-4">
+        <AlertTriangle className="text-brand-amber flex-shrink-0" size={24} />
+        <div className="space-y-1">
+          <h4 className="font-bold text-brand-amber">安全提醒</h4>
+          <p className="text-sm text-brand-amber/80 leading-relaxed">
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
             LiveJoy 仅作为信息撮合平台，不参与交易过程。请务必选择官方渠道或面对面交易，谨防诈骗。
           </p>
         </div>
       </div>
 
       <div className="bg-primary/5 -mx-6 px-6 py-12 rounded-[48px] flex flex-col md:flex-row gap-6 items-center">
+<<<<<<< HEAD
         <div className="flex-1 w-full">
           <SearchWithSuggestions
             placeholder="搜索演出名称..."
@@ -55,6 +88,14 @@ const TicketMarket: React.FC = () => {
             onSuggestionClick={(s) => setSearchTerm(s.title)}
             className="h-16"
             inputClassName="text-lg pl-12 rounded-2xl shadow-xl shadow-primary/5"
+=======
+        <div className="relative flex-1 group">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={20} />
+          <input 
+            type="text" 
+            placeholder="搜索演出名称..."
+            className="w-full h-16 pl-16 pr-6 bg-white border border-gray-100 rounded-2xl text-lg shadow-xl shadow-primary/5 focus:outline-none focus:border-primary/50 transition-all"
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           />
         </div>
         <button className="px-8 h-16 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/20 hover:bg-primary-hover transition-all flex items-center gap-3">
@@ -64,7 +105,11 @@ const TicketMarket: React.FC = () => {
       </div>
 
       <div className="space-y-4">
+<<<<<<< HEAD
         {filteredTickets.length > 0 ? filteredTickets.map(ticket => (
+=======
+        {tickets.map(ticket => (
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
           <div key={ticket.id} className="bg-white p-8 rounded-[32px] border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
             <div className="flex items-center gap-6 w-full md:w-auto">
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary flex-shrink-0">
@@ -84,7 +129,11 @@ const TicketMarket: React.FC = () => {
                 <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">转让价</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-2xl font-black text-primary">¥{ticket.price}</span>
+<<<<<<< HEAD
                   <span className="text-xs text-gray-400 line-through ml-2">原价{ticket.originalPrice}</span>
+=======
+                  <span className="text-xs text-gray-400 line-through">原价{ticket.originalPrice}</span>
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
                 </div>
               </div>
               <button className="px-8 py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-primary transition-all">
@@ -92,11 +141,15 @@ const TicketMarket: React.FC = () => {
               </button>
             </div>
           </div>
+<<<<<<< HEAD
         )) : (
           <div className="text-center py-20 bg-gray-50 rounded-[40px] border-2 border-dashed border-gray-200">
             <p className="text-gray-400 font-bold">暂无匹配的票务信息</p>
           </div>
         )}
+=======
+        ))}
+>>>>>>> b2fb15220200eafc0616b3a3d4f0758e1e8fb129
       </div>
     </div>
   );
