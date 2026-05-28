@@ -1,0 +1,39 @@
+
+{
+  "routes": [
+    { "path": "/", "src": "src/pages/Home.tsx" },
+    { "path": "/shows", "src": "src/pages/ShowList.tsx" },
+    { "path": "/show-detail", "src": "src/pages/ShowDetail.tsx" },
+    { "path": "/venues", "src": "src/pages/VenueList.tsx" },
+    { "path": "/venue-detail", "src": "src/pages/VenueDetail.tsx" },
+    { "path": "/travel", "src": "src/pages/TravelSurroundings.tsx" },
+    { "path": "/itinerary", "src": "src/pages/ItineraryGuide.tsx" },
+    { "path": "/itinerary-detail", "src": "src/pages/ItineraryDetail.tsx" },
+    { "path": "/social", "src": "src/pages/SocialSquare.tsx" },
+    { "path": "/social/buddies", "src": "src/pages/FindBuddies.tsx" },
+    { "path": "/social/tickets", "src": "src/pages/TicketMarket.tsx" },
+    { "path": "/profile", "src": "src/pages/Profile.tsx" },
+    { "path": "/profile/orders", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/reminders", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/itineraries", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/tickets", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/favorites", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/following", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/reviews", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/security", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/profile/help", "src": "src/pages/ProfileSubPages.tsx" },
+    { "path": "/login", "src": "src/pages/Login.tsx" },
+    { "path": "/register", "src": "src/pages/Register.tsx" },
+    { "path": "/admin", "src": "src/pages/AdminDashboard.tsx" },
+    { "path": "/admin/shows", "src": "src/pages/AdminShows.tsx" },
+    { "path": "/admin/venues", "src": "src/pages/AdminVenues.tsx" },
+    { "path": "/admin/posts", "src": "src/pages/AdminPosts.tsx" },
+    { "path": "/admin/users", "src": "src/pages/AdminUsers.tsx" }
+  ],
+  "components": [
+    { "name": "Layout", "src": "src/components/Layout.tsx" },
+    { "name": "AdminLayout", "src": "src/components/AdminLayout.tsx" },
+    { "name": "ShowCard", "src": "src/components/ShowCard.tsx" },
+    { "name": "SearchInput", "src": "src/components/SearchInput.tsx" }
+  ]
+}
