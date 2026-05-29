@@ -8,6 +8,39 @@ npm run dev\
 
 # 更新日志
 
+## 2026-05-29 version 3.0:
+### 超级大更新
+新增 / 修改的文件：
+
+| 文件 | 作用 |
+| --- | --- |
+| .env.example | VITE_API_BASE、VITE_USE_MOCK 配置示例 |
+| src/vite-env.d.ts | import.meta.env 类型声明 |
+| src/lib/request.ts | fetch 封装：baseURL / Bearer Token / 错误统一处理 / {data} 解包 |
+| src/api/index.ts | API 模块聚合导出 |
+| src/api/auth.ts | login / register / logout / updateProfile |
+| src/api/shows.ts | 演出 CRUD + 列表筛选 |
+| src/api/venues.ts | 场馆 CRUD + 列表筛选 |
+| src/api/posts.ts | 帖子列表 / 创建 / 删除 / 点赞 |
+| src/api/users.ts | 关注 / 取关 / 关注列表 / 粉丝列表 |
+| src/context/AppContext.tsx | 全部业务函数改为 async，调用 api 模块；原本地逻辑保留为注释 |
+| src/pages/Login.tsx | handleSubmit 改 async，await login(...) |
+| src/pages/Register.tsx | handleSubmit 改 async，await register(...) |
+
+  设计要点
+
+  1. 双模式开关：VITE_USE_MOCK=true 时所有 api 函数走本地 mock 分支（保留原本地测试逻辑）；改为 false 即调用真实后端。无需改业务代码。
+  2. 原本地函数保留方式：在 auth.ts / posts.ts / AppContext.tsx 等关键位置，每个函数顶部都用 JSDoc 注释保留了 原本地测试逻辑 段落，方便对照与回退。
+  3. 乐观更新 + 回滚：toggleFollow / toggleLike / deletePost 在网络请求失败时自动回滚 UI 状态。
+  4. Token 持久化：登录后 token 存 localStorage（key=livejoy_token），request.ts 自动附加到 Authorization 头。
+  5. 后端协议假设：默认后端返回 { code, data, message } 包装结构，request 自动解包 data。如果后端直接返回原对象也兼容。
+
+  接入真实后端的步骤
+
+  1. 复制 .env.example → .env，填写 VITE_API_BASE，将 VITE_USE_MOCK 改为 false。
+  2. 后端按照各 api 文件中标注的路径与方法实现接口（如 POST /auth/login、GET /shows 等）。
+  3. 如果后端响应结构不同，调整 src/lib/request.ts 中的解包逻辑即可，业务层无感知。
+
 ## 2026-05-28 version 2.1:
 - 新增了搜索栏实时联想（首页的联想逻辑还未完善，故暂不实现）
 - B端采取了Modal弹窗实现新增/编辑演出和场馆，删除逻辑等待实现。

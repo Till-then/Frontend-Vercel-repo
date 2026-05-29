@@ -32,7 +32,7 @@ const Register: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.username || !formData.phone || !formData.email || !formData.password) {
@@ -65,7 +65,7 @@ const Register: React.FC = () => {
       return;
     }
     
-    const success = register(formData);
+    const success = await register(formData);
     if (success) {
       navigate('/');
     } else {
