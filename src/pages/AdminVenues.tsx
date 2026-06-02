@@ -1,21 +1,27 @@
 
 import React, { useState } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
   MapPin,
   Users,
   Info,
   X,
   Image as ImageIcon
 } from 'lucide-react';
-import { VENUES, Venue, CITIES } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+import { Venue, CITIES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { VENUES } from '../data/mockData';
 import { toast } from 'sonner';
 
 const AdminVenues: React.FC = () => {
-  const [venues, setVenues] = useState<Venue[]>(VENUES);
+  // 真实后端：venues / CRUD 走 AppContext（背后是 GET/POST/PUT/DELETE /admin/venues）
+  // --- 原本地逻辑 ---
+  // const [venues, setVenues] = useState<Venue[]>(VENUES);
+  const { venues, addVenue, editVenue, removeVenue } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingVenue, setEditingVenue] = useState<Venue | null>(null);
@@ -37,9 +43,11 @@ const AdminVenues: React.FC = () => {
     v.city.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('确定要删除这个场馆吗？')) {
-      setVenues(venues.filter(v => v.id !== id));
+      // --- 原本地逻辑 ---
+      // setVenues(venues.filter(v => v.id !== id));
+      await removeVenue(id);
       toast.success('场馆已删除');
     }
   };
@@ -67,19 +75,25 @@ const AdminVenues: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editingVenue) {
-      setVenues(prev => prev.map(v => v.id === editingVenue.id ? { ...v, ...formData } as Venue : v));
-      toast.success('场馆信息已更新');
+      // --- 原本地逻辑 ---
+      // setVenues(prev => prev.map(v => v.id === editingVenue.id ? { ...v, ...formData } as Venue : v));
+      const result = await editVenue(editingVenue.id, formData);
+      if (result) toast.success('场馆信息已更新');
+      else toast.error('更新失败，请检查后端服务');
     } else {
-      const newVenue: Venue = {
+      // --- 原本地逻辑 ---
+      // const newVenue: Venue = { ...formData, id: `v${Date.now()}`, lastBus: '23:30' } as Venue;
+      // setVenues(prev => [newVenue, ...prev]);
+      const payload = {
         ...formData,
-        id: `v${Date.now()}`,
-        lastBus: '23:30'
-      } as Venue;
-      setVenues(prev => [newVenue, ...prev]);
-      toast.success('新增场馆成功');
+        lastBus: (formData as any).lastBus || '23:30',
+      } as Omit<Venue, 'id'>;
+      const created = await addVenue(payload);
+      if (created) toast.success('新增场馆成功');
+      else toast.error('新增失败，请检查后端服务');
     }
     setIsModalOpen(false);
   };

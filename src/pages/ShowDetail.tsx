@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { SHOWS, VENUES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS, VENUES } from '../data/mockData';
 import { useAppContext } from '../context/AppContext';
 import { toast } from 'sonner';
 import { 
@@ -29,10 +30,21 @@ const ShowDetail: React.FC = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
-  const show = SHOWS.find(s => s.id === id) || SHOWS[0];
-  const venue = VENUES.find(v => v.id === show.venueId) || VENUES[0];
 
-  const { favorites, toggleFavorite, reminders, toggleReminder, posts, currentUser, addPost } = useAppContext();
+  // 真实后端：演出 / 场馆均来自 AppContext（GET /shows、GET /venues）
+  // --- 原本地逻辑 ---
+  // const show = SHOWS.find(s => s.id === id) || SHOWS[0];
+  // const venue = VENUES.find(v => v.id === show.venueId) || VENUES[0];
+  const { favorites, toggleFavorite, reminders, toggleReminder, posts, currentUser, addPost, shows, venues } = useAppContext();
+  const show = shows.find(s => s.id === id) || shows[0];
+  const venue = show ? (venues.find(v => v.id === show.venueId) || venues[0]) : venues[0];
+
+  if (!show || !venue) {
+    return (
+      <div className="py-32 text-center text-gray-400">演出加载中或不存在...</div>
+    );
+  }
+
   const isFavorite = favorites.includes(show.id);
   const isReminded = reminders.includes(show.id);
 

@@ -1,9 +1,13 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Post, MOCK_POSTS } from '../data/mockData';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { Post, Show, Venue } from '../data/mockData';
+// --- 原本地兜底数据（保留为注释，便于回退） ---
+// import { MOCK_POSTS, SHOWS as MOCK_SHOWS, VENUES as MOCK_VENUES } from '../data/mockData';
 import * as authApi from '../api/auth';
 import * as postsApi from '../api/posts';
 import * as usersApi from '../api/users';
+import * as showsApi from '../api/shows';
+import * as venuesApi from '../api/venues';
 import { tokenStore } from '../lib/request';
 
 export interface User {
@@ -42,6 +46,20 @@ interface AppContextType {
   addPost: (content: string, images: string[]) => Promise<void>;
   deletePost: (postId: string) => Promise<void>;
   toggleLike: (postId: string) => Promise<void>;
+
+  // Shows（全局共享，新增/修改/删除会立刻反映到首页 / 搜索页 / 后台）
+  shows: Show[];
+  refreshShows: () => Promise<void>;
+  addShow: (payload: Omit<Show, 'id'>) => Promise<Show | null>;
+  editShow: (id: string, payload: Partial<Show>) => Promise<Show | null>;
+  removeShow: (id: string) => Promise<void>;
+
+  // Venues（同上）
+  venues: Venue[];
+  refreshVenues: () => Promise<void>;
+  addVenue: (payload: Omit<Venue, 'id'>) => Promise<Venue | null>;
+  editVenue: (id: string, payload: Partial<Venue>) => Promise<Venue | null>;
+  removeVenue: (id: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -56,20 +74,50 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [following, setFollowing] = useState<number[]>([]);
   const [followers, setFollowers] = useState<number[]>([]);
 
-  // Posts State
+  // Posts / Shows / Venues 全局列表
   const [posts, setPosts] = useState<Post[]>([]);
+  const [shows, setShows] = useState<Show[]>([]);
+  const [venues, setVenues] = useState<Venue[]>([]);
 
-  // 初始化：拉取帖子 / 关注列表（如果已登录）
+  // 拉取演出 / 场馆（提供给上层手动刷新）
+  const refreshShows = useCallback(async () => {
+    try {
+      const data = await showsApi.listShows();
+      setShows(data);
+    } catch {
+      // --- 原本地逻辑 ---
+      // setShows(MOCK_SHOWS);
+      setShows([]);
+    }
+  }, []);
+
+  const refreshVenues = useCallback(async () => {
+    try {
+      const data = await venuesApi.listVenues();
+      setVenues(data);
+    } catch {
+      // --- 原本地逻辑 ---
+      // setVenues(MOCK_VENUES);
+      setVenues([]);
+    }
+  }, []);
+
+  // 初始化：拉取帖子 / 关注列表（如果已登录）/ 演出 / 场馆
   useEffect(() => {
     // --- 原本地逻辑 ---
     // setPosts(MOCK_POSTS);
     // setFollowing([101]);
     // setFollowers([102]);
+    // setShows(MOCK_SHOWS);
+    // setVenues(MOCK_VENUES);
 
     postsApi
       .listPosts()
       .then(setPosts)
-      .catch(() => setPosts(MOCK_POSTS)); // 网络失败时回退到 mock
+      .catch(() => setPosts([]));
+
+    refreshShows();
+    refreshVenues();
 
     if (tokenStore.get()) {
       Promise.all([usersApi.listFollowing(), usersApi.listFollowers()])
@@ -78,14 +126,20 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           setFollowers(fr);
         })
         .catch(() => {
-          setFollowing([101]);
-          setFollowers([102]);
+          // --- 原本地逻辑 ---
+          // setFollowing([101]);
+          // setFollowers([102]);
+          setFollowing([]);
+          setFollowers([]);
         });
     } else {
-      setFollowing([101]);
-      setFollowers([102]);
+      // --- 原本地逻辑 ---
+      // setFollowing([101]);
+      // setFollowers([102]);
+      setFollowing([]);
+      setFollowers([]);
     }
-  }, []);
+  }, [refreshShows, refreshVenues]);
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
@@ -316,6 +370,80 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  /**
+   * 演出 CRUD（后台）—— 真实后端
+   *
+   * --- 原本地逻辑 ---
+   * setShows(prev => [{...payload, id: `s${Date.now()}`} as Show, ...prev]);
+   * setShows(prev => prev.map(s => s.id === id ? {...s, ...payload} : s));
+   * setShows(prev => prev.filter(s => s.id !== id));
+   */
+  const addShow = async (payload: Omit<Show, 'id'>): Promise<Show | null> => {
+    try {
+      const created = await showsApi.createShow(payload);
+      setShows((prev) => [created, ...prev]);
+      return created;
+    } catch {
+      return null;
+    }
+  };
+
+  const editShow = async (id: string, payload: Partial<Show>): Promise<Show | null> => {
+    try {
+      const updated = await showsApi.updateShow(id, payload);
+      setShows((prev) => prev.map((s) => (s.id === id ? { ...s, ...updated } : s)));
+      return updated;
+    } catch {
+      return null;
+    }
+  };
+
+  const removeShow = async (id: string) => {
+    const snapshot = shows;
+    setShows((prev) => prev.filter((s) => s.id !== id));
+    try {
+      await showsApi.deleteShow(id);
+    } catch {
+      setShows(snapshot); // 回滚
+    }
+  };
+
+  /**
+   * 场馆 CRUD（后台）—— 真实后端
+   *
+   * --- 原本地逻辑 ---
+   * setVenues(prev => [{...payload, id: `v${Date.now()}`} as Venue, ...prev]);
+   */
+  const addVenue = async (payload: Omit<Venue, 'id'>): Promise<Venue | null> => {
+    try {
+      const created = await venuesApi.createVenue(payload);
+      setVenues((prev) => [created, ...prev]);
+      return created;
+    } catch {
+      return null;
+    }
+  };
+
+  const editVenue = async (id: string, payload: Partial<Venue>): Promise<Venue | null> => {
+    try {
+      const updated = await venuesApi.updateVenue(id, payload);
+      setVenues((prev) => prev.map((v) => (v.id === id ? { ...v, ...updated } : v)));
+      return updated;
+    } catch {
+      return null;
+    }
+  };
+
+  const removeVenue = async (id: string) => {
+    const snapshot = venues;
+    setVenues((prev) => prev.filter((v) => v.id !== id));
+    try {
+      await venuesApi.deleteVenue(id);
+    } catch {
+      setVenues(snapshot); // 回滚
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -338,6 +466,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         addPost,
         deletePost,
         toggleLike,
+        shows,
+        refreshShows,
+        addShow,
+        editShow,
+        removeShow,
+        venues,
+        refreshVenues,
+        addVenue,
+        editVenue,
+        removeVenue,
       }}
     >
       {children}

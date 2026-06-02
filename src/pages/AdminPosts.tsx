@@ -11,29 +11,68 @@
  * DELETE /api/posts/:id           - 删除动态
  */
 
-import React, { useState } from 'react';
-import { 
-  CheckCircle, 
-  XCircle, 
-  Trash2, 
+import React, { useState, useEffect } from 'react';
+import {
+  CheckCircle,
+  XCircle,
+  Trash2,
   Eye,
   MessageSquare,
   Clock,
   User,
   AlertCircle
 } from 'lucide-react';
-import { MOCK_POSTS, Post } from '../data/mockData';
+import { Post } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { MOCK_POSTS } from '../data/mockData';
+import * as postsApi from '../api/posts';
+import { toast } from 'sonner';
 
 const AdminPosts: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
+  // 真实后端：帖子列表 / 审核 / 删除均走 /posts、/admin/posts/:id/approve|reject
+  // --- 原本地逻辑 ---
+  // const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  const handleStatusChange = (id: string, newStatus: '已通过' | '已拒绝') => {
-    setPosts(posts.map(p => p.id === id ? { ...p, status: newStatus } : p));
+  useEffect(() => {
+    postsApi
+      .listPosts()
+      .then(setPosts)
+      .catch(() => {
+        // --- 原本地逻辑 ---
+        // setPosts(MOCK_POSTS);
+        setPosts([]);
+        toast.error('加载帖子列表失败');
+      });
+  }, []);
+
+  const handleStatusChange = async (id: string, newStatus: '已通过' | '已拒绝') => {
+    const snapshot = posts;
+    // 乐观更新
+    setPosts(prev => prev.map(p => p.id === id ? { ...p, status: newStatus } : p));
+    try {
+      // --- 原本地逻辑 ---
+      // setPosts(posts.map(p => p.id === id ? { ...p, status: newStatus } : p));
+      if (newStatus === '已通过') await postsApi.approvePost(id);
+      else await postsApi.rejectPost(id);
+    } catch {
+      setPosts(snapshot);
+      toast.error('审核失败');
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('确定要彻底删除这条帖子吗？')) {
-      setPosts(posts.filter(p => p.id !== id));
+      const snapshot = posts;
+      setPosts(prev => prev.filter(p => p.id !== id));
+      try {
+        // --- 原本地逻辑 ---
+        // setPosts(posts.filter(p => p.id !== id));
+        await postsApi.deletePost(id);
+      } catch {
+        setPosts(snapshot);
+        toast.error('删除失败');
+      }
     }
   };
 

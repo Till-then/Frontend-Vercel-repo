@@ -11,12 +11,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { SHOWS } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS } from '../data/mockData';
 import { ShowCard } from '../components/ShowCard';
 import { ChevronRight, Search, Mic2, Music, Ticket, Camera, MapPin, Clock, Star, TrendingUp, Zap, Music2, Users, Compass } from 'lucide-react';
 
 const Home: React.FC = () => {
-  const { selectedCity } = useAppContext();
+  // 真实后端：shows 由 AppContext 通过 GET /shows 拉取并全局共享，
+  // 因此后台新增的演出会自动在首页推荐 / 抢票播报站中出现。
+  const { selectedCity, shows } = useAppContext();
 
   const categories = [
     { name: '演唱会', icon: <Mic2 size={24} />, color: 'from-pink-500 to-rose-500', path: '/shows?type=演唱会' },
@@ -27,9 +30,13 @@ const Home: React.FC = () => {
     { name: '曲艺杂谈', icon: <Zap size={24} />, color: 'from-yellow-500 to-orange-500', path: '/shows?type=曲艺杂谈' },
   ];
 
-  const upcomingShows = SHOWS.filter(s => s.status === '即将开票').slice(0, 4);
-  const recommendedShows = SHOWS.filter(s => s.city === selectedCity).slice(0, 8);
-  const hotShows = SHOWS.slice(0, 4);
+  // --- 原本地逻辑 ---
+  // const upcomingShows = SHOWS.filter(s => s.status === '即将开票').slice(0, 4);
+  // const recommendedShows = SHOWS.filter(s => s.city === selectedCity).slice(0, 8);
+  // const hotShows = SHOWS.slice(0, 4);
+  const upcomingShows = shows.filter(s => s.status === '即将开票').slice(0, 4);
+  const recommendedShows = shows.filter(s => s.city === selectedCity).slice(0, 8);
+  const hotShows = shows.slice(0, 4);
 
   return (
     <div className="space-y-16">

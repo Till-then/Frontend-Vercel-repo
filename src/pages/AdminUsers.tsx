@@ -9,33 +9,63 @@
  * PUT    /api/admin/users/:id/status     - 禁用/启用用户
  */
 
-import React, { useState } from 'react';
-import { 
-  Search, 
-  UserX, 
-  UserCheck, 
+import React, { useState, useEffect } from 'react';
+import {
+  Search,
+  UserX,
+  UserCheck,
   Eye,
   Mail,
   Phone,
   Calendar,
   Shield
 } from 'lucide-react';
-import { MOCK_USERS, UserData } from '../data/mockData';
+import { UserData } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { MOCK_USERS } from '../data/mockData';
+import * as usersApi from '../api/users';
+import { toast } from 'sonner';
 
 const AdminUsers: React.FC = () => {
-  const [users, setUsers] = useState<UserData[]>(MOCK_USERS);
+  // 真实后端：用户列表 / 状态切换走 GET /admin/users、PUT /admin/users/:id/status
+  // --- 原本地逻辑 ---
+  // const [users, setUsers] = useState<UserData[]>(MOCK_USERS);
+  const [users, setUsers] = useState<UserData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredUsers = users.filter(u => 
+  useEffect(() => {
+    usersApi
+      .listUsers()
+      .then(setUsers)
+      .catch(() => {
+        // --- 原本地逻辑 ---
+        // setUsers(MOCK_USERS);
+        setUsers([]);
+        toast.error('加载用户列表失败');
+      });
+  }, []);
+
+  const filteredUsers = users.filter(u =>
     u.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
     u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     u.phone.includes(searchTerm)
   );
 
-  const toggleUserStatus = (id: number) => {
-    setUsers(users.map(u => 
-      u.id === id ? { ...u, status: u.status === '正常' ? '禁用' : '正常' } : u
-    ));
+  const toggleUserStatus = async (id: number) => {
+    const target = users.find(u => u.id === id);
+    if (!target) return;
+    const next = target.status === '正常' ? '禁用' : '正常';
+    // 乐观更新
+    const snapshot = users;
+    setUsers(prev => prev.map(u => u.id === id ? { ...u, status: next } : u));
+    try {
+      // --- 原本地逻辑 ---
+      // setUsers(users.map(u => u.id === id ? { ...u, status: next } : u));
+      await usersApi.updateUserStatus(id, next);
+    } catch {
+      setUsers(snapshot);
+      toast.error('状态更新失败');
+    }
   };
 
   return (

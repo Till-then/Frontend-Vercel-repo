@@ -6,7 +6,50 @@ npm run dev\
 然后进入Vite对应的本地地址（通常是 http://localhost:5173）
 
 
+TODO：
+1. 复制环境变量：cp .env.example .env，并把 VITE_API_BASE 改成你后端的真实地址。
+  2. 保证后端实现这些路由（按统一返回 { code, data, message } 或直接返回数据均可，request.ts 都能解包）：
+    - POST /auth/login POST /auth/register POST /auth/logout PATCH /auth/me
+    - GET /shows GET /shows/:id POST /admin/shows PUT /admin/shows/:id DELETE /admin/shows/:id
+    - GET /venues GET /venues/:id POST /admin/venues PUT /admin/venues/:id DELETE /admin/venues/:id
+    - GET /posts POST /posts DELETE /posts/:id POST /posts/:id/like
+    - PUT /admin/posts/:id/approve PUT /admin/posts/:id/reject
+    - GET /admin/users PUT /admin/users/:id/status GET /users?ids=1,2
+    - POST /users/:id/follow DELETE /users/:id/follow GET /users/me/following GET /users/me/followers
+  3. 跑 npm install && npm run dev 验证。
+
+  如需临时退回 mock 数据：把 .env 里 VITE_USE_MOCK=true，并解注释相应文件中的 // --- 原本地逻辑 --- 段即可。
+
+
 # 更新日志
+
+## 2026-06-02 version 3.1:
+
+改动汇总
+
+  1. src/lib/request.ts — USE_MOCK 默认值从 true 翻为 false，原值以注释保留。
+
+  2. API 层（src/api/*.ts） — shows / venues / posts / users / auth 的每个函数都去掉了 if (USE_MOCK) {...} 分支，只保留真实后端调用；mock 分支整段以注释保留在函数注释里。
+  - 同时新增了 users.updateUserStatus / users.listUsersByIds / posts.approvePost / posts.rejectPost，用于后台用户状态切换、按 ID 拉取用户、帖子审核。
+
+  3. src/context/AppContext.tsx — 重大变更：
+  - 新增全局 shows / venues 数组 + addShow / editShow / removeShow / addVenue / editVenue / removeVenue / refreshShows / refreshVenues。
+  - 启动时自动 GET /shows 与 GET /venues，让首页 / 搜索 / 详情 / 后台共用同一份数据。
+  - 移除 MOCK_POSTS / [101] / [102] 等兜底，改为返回空数组（兜底以注释保留）。
+
+  4. 页面（消费侧） — 全部改为读 Context 而不是直接 import { SHOWS / VENUES / MOCK_POSTS / MOCK_USERS } from '../data/mockData'：
+  - Home.tsx、ShowList.tsx、ShowDetail.tsx、ProfileSubPages.tsx（MyFavorites）→ 用 shows
+  - VenueList.tsx、VenueDetail.tsx → 用 venues
+  - AdminDashboard.tsx → 用 shows / venues / posts，用户数走 usersApi.listUsers()
+  - AdminPosts.tsx、AdminUsers.tsx → 改为页面 useEffect 拉取并 API 改写状态/审核/删除
+  - ProfileSubPages.tsx（MyFollowing / MyFollowers）→ 改为 usersApi.listUsersByIds(following/followers)
+
+  5. 后台编辑页（生产侧）：
+  - AdminShows.tsx / AdminVenues.tsx 的 useState<Show[]>(SHOWS) 局部副本改成 Context 全局 → 新增/编辑/删除立刻在首页和搜索页生效（这正是上一条问题的根因解决）。
+
+  6. .env.example — VITE_USE_MOCK=false，并加了一行注释说明默认已切真实后端。
+   
+### 在完成后端接入前，前端将不会再更新。
 
 ## 2026-05-29 version 3.0:
 ### 超级大更新

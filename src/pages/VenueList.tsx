@@ -9,25 +9,33 @@
  */
 
 import React, { useState } from 'react';
-import { VENUES, CITIES } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+import { CITIES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { VENUES } from '../data/mockData';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, MapPin, ChevronRight, Bus, Info, Navigation, Users } from 'lucide-react';
 import SearchWithSuggestions from '../components/SearchWithSuggestions';
 
 const VenueList: React.FC = () => {
   const navigate = useNavigate();
+  // 真实后端：venues 来自 AppContext（GET /venues），新增/编辑会自动同步
+  const { venues } = useAppContext();
   const [selectedCity, setSelectedCity] = useState('全部');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredVenues = VENUES.filter(v => {
+  // --- 原本地逻辑 ---
+  // const filteredVenues = VENUES.filter(...)
+  // const suggestions = VENUES.filter(...).map(...)
+  const filteredVenues = venues.filter(v => {
     const matchesCity = selectedCity === '全部' || v.city === selectedCity;
-    const matchesSearch = v.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = v.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          v.address.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCity && matchesSearch;
   });
 
-  const suggestions = VENUES.filter(v => 
-    v.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const suggestions = venues.filter(v =>
+    v.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     v.city.toLowerCase().includes(searchTerm.toLowerCase())
   ).map(v => ({
     id: v.id,

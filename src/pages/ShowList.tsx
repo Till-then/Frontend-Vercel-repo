@@ -10,7 +10,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SHOWS, CITIES } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+import { CITIES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS } from '../data/mockData';
 import { ShowCard } from '../components/ShowCard';
 import { Search, Filter, MapPin, Calendar, ChevronDown, Music2, Ticket, Mic2, Music, TrendingUp, Zap, Camera } from 'lucide-react';
 import SearchWithSuggestions from '../components/SearchWithSuggestions';
@@ -21,6 +24,8 @@ const ShowList: React.FC = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialType = queryParams.get('type') || '全部';
 
+  // 真实后端：shows 来自 AppContext（GET /shows），新增 / 编辑 / 删除会自动同步到这里
+  const { shows } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState(initialType);
   const [selectedCity, setSelectedCity] = useState('全部');
@@ -29,7 +34,10 @@ const ShowList: React.FC = () => {
   const types = ['全部', '演唱会', 'Livehouse', '音乐节', '话剧展览', '体育赛事', '曲艺杂谈'];
   const statuses = ['全部', '售票中', '即将开票', '已售罄'];
 
-  const filteredShows = SHOWS.filter(show => {
+  // --- 原本地逻辑 ---
+  // const filteredShows = SHOWS.filter(...)
+  // const suggestions = SHOWS.filter(...).map(...)
+  const filteredShows = shows.filter(show => {
     const matchesSearch = show.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          show.artist.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = selectedType === '全部' || show.type === selectedType;
@@ -38,7 +46,7 @@ const ShowList: React.FC = () => {
     return matchesSearch && matchesType && matchesCity && matchesStatus;
   });
 
-  const suggestions = SHOWS.filter(show => 
+  const suggestions = shows.filter(show =>
     show.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     show.artist.toLowerCase().includes(searchTerm.toLowerCase())
   ).map(show => ({

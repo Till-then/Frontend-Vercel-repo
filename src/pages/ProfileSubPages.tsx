@@ -1,8 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { SHOWS, MOCK_USERS } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS, MOCK_USERS } from '../data/mockData';
+import type { UserData } from '../data/mockData';
+import * as usersApi from '../api/users';
 import { ShowCard } from '../components/ShowCard';
 import { 
   ChevronLeft, 
@@ -63,8 +66,11 @@ export const MyTickets = () => (
 );
 
 export const MyFavorites = () => {
-  const { favorites, toggleFavorite } = useAppContext();
-  const favoriteShows = SHOWS.filter(s => favorites.includes(s.id));
+  // 真实后端：演出来自 AppContext（GET /shows）
+  const { favorites, toggleFavorite, shows } = useAppContext();
+  // --- 原本地逻辑 ---
+  // const favoriteShows = SHOWS.filter(s => favorites.includes(s.id));
+  const favoriteShows = shows.filter(s => favorites.includes(s.id));
   return (
     <div className="max-w-4xl mx-auto">
       <SubPageHeader title="我的收藏" />
@@ -95,7 +101,17 @@ export const MyFavorites = () => {
 
 export const MyFollowing = () => {
   const { following, toggleFollow } = useAppContext();
-  const users = MOCK_USERS.filter(u => following.includes(u.id));
+  // 真实后端：通过 GET /users?ids=... 拉取关注用户的资料
+  // --- 原本地逻辑 ---
+  // const users = MOCK_USERS.filter(u => following.includes(u.id));
+  const [users, setUsers] = useState<UserData[]>([]);
+  useEffect(() => {
+    if (following.length === 0) {
+      setUsers([]);
+      return;
+    }
+    usersApi.listUsersByIds(following).then(setUsers).catch(() => setUsers([]));
+  }, [following]);
   return (
     <div className="max-w-4xl mx-auto">
       <SubPageHeader title="我的关注" />
@@ -130,7 +146,17 @@ export const MyFollowing = () => {
 
 export const MyFollowers = () => {
   const { followers, following, toggleFollow } = useAppContext();
-  const users = MOCK_USERS.filter(u => followers.includes(u.id));
+  // 真实后端：通过 GET /users?ids=... 拉取粉丝用户的资料
+  // --- 原本地逻辑 ---
+  // const users = MOCK_USERS.filter(u => followers.includes(u.id));
+  const [users, setUsers] = useState<UserData[]>([]);
+  useEffect(() => {
+    if (followers.length === 0) {
+      setUsers([]);
+      return;
+    }
+    usersApi.listUsersByIds(followers).then(setUsers).catch(() => setUsers([]));
+  }, [followers]);
   return (
     <div className="max-w-4xl mx-auto">
       <SubPageHeader title="我的粉丝" />

@@ -10,7 +10,8 @@
 
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { VENUES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { VENUES } from '../data/mockData';
 import { useAppContext } from '../context/AppContext';
 import { 
   Bus, 
@@ -37,10 +38,19 @@ const VenueDetail: React.FC = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
-  const venue = VENUES.find(v => v.id === id) || VENUES[0];
-  const { posts } = useAppContext();
+  // 真实后端：场馆与帖子均来自 AppContext（GET /venues、GET /posts）
+  // --- 原本地逻辑 ---
+  // const venue = VENUES.find(v => v.id === id) || VENUES[0];
+  const { posts, venues } = useAppContext();
+  const venue = venues.find(v => v.id === id) || venues[0];
 
-  const relatedPosts = posts.filter(post => 
+  if (!venue) {
+    return (
+      <div className="py-32 text-center text-gray-400">场馆加载中或不存在...</div>
+    );
+  }
+
+  const relatedPosts = posts.filter(post =>
     post.content.toLowerCase().includes(venue.name.toLowerCase())
   );
 

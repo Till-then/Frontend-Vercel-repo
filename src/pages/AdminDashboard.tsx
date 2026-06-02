@@ -8,25 +8,42 @@
  * GET    /api/admin/dashboard     - 获取仪表盘统计数据
  */
 
-import React from 'react';
-import { 
-  Users, 
-  Music2, 
-  MapPin, 
+import React, { useEffect, useState } from 'react';
+import {
+  Users,
+  Music2,
+  MapPin,
   MessageSquare,
   TrendingUp,
   ArrowUpRight,
   Calendar,
   Clock
 } from 'lucide-react';
-import { SHOWS, VENUES, MOCK_POSTS, MOCK_USERS } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS, VENUES, MOCK_POSTS, MOCK_USERS } from '../data/mockData';
+import * as usersApi from '../api/users';
+import type { UserData } from '../data/mockData';
 
 const AdminDashboard: React.FC = () => {
+  // 真实后端：演出 / 场馆 / 帖子 来自 AppContext，用户数走 GET /admin/users
+  const { shows, venues, posts } = useAppContext();
+  const [users, setUsers] = useState<UserData[]>([]);
+
+  useEffect(() => {
+    usersApi.listUsers().then(setUsers).catch(() => setUsers([]));
+  }, []);
+
   const stats = [
-    { label: '演出总数', value: SHOWS.length, icon: <Music2 size={24} />, color: 'bg-blue-500', trend: '+12%' },
-    { label: '场馆总数', value: VENUES.length, icon: <MapPin size={24} />, color: 'bg-emerald-500', trend: '+2' },
-    { label: '用户总数', value: MOCK_USERS.length + 1000, icon: <Users size={24} />, color: 'bg-purple-500', trend: '+15%' },
-    { label: '待审核帖子', value: MOCK_POSTS.filter(p => p.status === '待审核').length, icon: <MessageSquare size={24} />, color: 'bg-amber-500', trend: '5' },
+    // --- 原本地逻辑 ---
+    // { label: '演出总数', value: SHOWS.length, ... },
+    // { label: '场馆总数', value: VENUES.length, ... },
+    // { label: '用户总数', value: MOCK_USERS.length + 1000, ... },
+    // { label: '待审核帖子', value: MOCK_POSTS.filter(p => p.status === '待审核').length, ... },
+    { label: '演出总数', value: shows.length, icon: <Music2 size={24} />, color: 'bg-blue-500', trend: '+12%' },
+    { label: '场馆总数', value: venues.length, icon: <MapPin size={24} />, color: 'bg-emerald-500', trend: '+2' },
+    { label: '用户总数', value: users.length, icon: <Users size={24} />, color: 'bg-purple-500', trend: '+15%' },
+    { label: '待审核帖子', value: posts.filter(p => p.status === '待审核').length, icon: <MessageSquare size={24} />, color: 'bg-amber-500', trend: '5' },
   ];
 
   return (

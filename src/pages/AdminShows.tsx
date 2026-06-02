@@ -12,21 +12,27 @@
  */
 
 import React, { useState } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
   Filter,
   X,
   Upload,
   CheckCircle2
 } from 'lucide-react';
-import { SHOWS, Show, CITIES } from '../data/mockData';
+import { useAppContext } from '../context/AppContext';
+import { Show, CITIES } from '../data/mockData';
+// --- 原本地逻辑（保留为注释，便于回退） ---
+// import { SHOWS } from '../data/mockData';
 import { toast } from 'sonner';
 
 const AdminShows: React.FC = () => {
-  const [shows, setShows] = useState<Show[]>(SHOWS);
+  // 真实后端：演出列表 / CRUD 全部走 AppContext（背后是 GET/POST/PUT/DELETE /admin/shows）
+  // --- 原本地逻辑 ---
+  // const [shows, setShows] = useState<Show[]>(SHOWS);
+  const { shows, addShow, editShow, removeShow } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingShow, setEditingShow] = useState<Show | null>(null);
@@ -72,7 +78,7 @@ const AdminShows: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.artist || !formData.venue) {
       toast.error('请填写必填项');
@@ -80,23 +86,31 @@ const AdminShows: React.FC = () => {
     }
 
     if (editingShow) {
-      setShows(shows.map(s => s.id === editingShow.id ? { ...s, ...formData } as Show : s));
-      toast.success('演出信息已更新');
+      // --- 原本地逻辑 ---
+      // setShows(shows.map(s => s.id === editingShow.id ? { ...s, ...formData } as Show : s));
+      const result = await editShow(editingShow.id, formData);
+      if (result) toast.success('演出信息已更新');
+      else toast.error('更新失败，请检查后端服务');
     } else {
-      const newShow = {
+      // --- 原本地逻辑 ---
+      // const newShow = { ...formData, id: (shows.length + 1).toString(), venueId: 'v1' } as Show;
+      // setShows([newShow, ...shows]);
+      const payload = {
         ...formData,
-        id: (shows.length + 1).toString(),
-        venueId: 'v1' // Default for demo
-      } as Show;
-      setShows([newShow, ...shows]);
-      toast.success('新演出已添加');
+        venueId: (formData as any).venueId || 'v1', // Default for demo
+      } as Omit<Show, 'id'>;
+      const created = await addShow(payload);
+      if (created) toast.success('新演出已添加');
+      else toast.error('新增失败，请检查后端服务');
     }
     setIsModalOpen(false);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('确定要删除这场演出吗？')) {
-      setShows(shows.filter(s => s.id !== id));
+      // --- 原本地逻辑 ---
+      // setShows(shows.filter(s => s.id !== id));
+      await removeShow(id);
       toast.success('演出已删除');
     }
   };

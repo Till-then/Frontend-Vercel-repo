@@ -9,8 +9,18 @@
  */
 
 export const API_BASE: string = import.meta.env.VITE_API_BASE || '';
+
+/**
+ * 是否启用本地 mock 数据。
+ *
+ * --- 原本地逻辑（已废弃，保留作参考） ---
+ * export const USE_MOCK: boolean =
+ *   (import.meta.env.VITE_USE_MOCK ?? 'true').toString().toLowerCase() === 'true';
+ *
+ * 现在默认走真实后端；如需临时切回 mock，把 .env 设置 VITE_USE_MOCK=true 即可。
+ */
 export const USE_MOCK: boolean =
-  (import.meta.env.VITE_USE_MOCK ?? 'true').toString().toLowerCase() === 'true';
+  (import.meta.env.VITE_USE_MOCK ?? 'false').toString().toLowerCase() === 'true';
 
 const TOKEN_KEY = 'livejoy_token';
 
