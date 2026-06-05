@@ -36,9 +36,9 @@ const VenueDetail: React.FC = () => {
 
   useEffect(() => {
     if (!venue?.id) return;
-    venuesApi.getVenueStrategies(venue.id).then(setStrategies).catch(() => setStrategies([]));
-    venuesApi.getVenueCaterings(venue.id).then(setCaterings).catch(() => setCaterings([]));
-    venuesApi.getVenueAccommodations(venue.id).then(setAccommodations).catch(() => setAccommodations([]));
+    venuesApi.getVenueStrategies(venue.id).then(data => setStrategies(data || [])).catch(() => setStrategies([]));
+    venuesApi.getVenueCaterings(venue.id).then(data => setCaterings(data || [])).catch(() => setCaterings([]));
+    venuesApi.getVenueAccommodations(venue.id).then(data => setAccommodations(data || [])).catch(() => setAccommodations([]));
   }, [venue?.id]);
 
   if (!venue) {
