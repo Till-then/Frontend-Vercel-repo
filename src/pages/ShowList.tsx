@@ -71,7 +71,7 @@ const ShowList: React.FC = () => {
             placeholder="搜索演出名称、艺人、场馆或城市..."
             onSearch={(term) => setSearchTerm(term)}
             suggestions={suggestions}
-            onSuggestionClick={(s) => navigate(`/shows/${s.id}`)}
+            onSuggestionClick={(s) => navigate(`/show-detail?id=${s.id}`)}
             className="h-20"
             inputClassName="text-xl pl-16 rounded-3xl shadow-xl shadow-primary/5"
           />
