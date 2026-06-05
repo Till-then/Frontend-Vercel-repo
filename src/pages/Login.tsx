@@ -1,14 +1,4 @@
 
-/**
- * ========================================
- * LiveJoy RESTful API 接口文档注释
- * ========================================
- *
- * === 用户模块 (User Service) ===
- * POST   /api/user/login          - 用户登录
- * POST   /api/user/register       - 用户注册
- */
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
@@ -17,22 +7,22 @@ import { Music2, User, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 const Login: React.FC = () => {
   const { login } = useAppContext();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [userAccount, setUserAccount] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError('请输入用户名和密码');
+    if (!userAccount || !password) {
+      setError('请输入账号和密码');
       return;
     }
-    const success = await login(username, password);
+    const success = await login(userAccount, password);
     if (success) {
       navigate('/');
     } else {
-      setError('用户名或密码错误');
+      setError('账号或密码错误');
     }
   };
 
@@ -59,13 +49,13 @@ const Login: React.FC = () => {
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">用户名</label>
+              <label className="text-sm font-bold text-gray-700 ml-1">账号</label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={userAccount}
+                  onChange={(e) => setUserAccount(e.target.value)}
                   placeholder="请输入用户名"
                   className="w-full h-12 pl-12 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 />

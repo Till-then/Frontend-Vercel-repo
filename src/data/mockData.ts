@@ -12,6 +12,7 @@ export interface Show {
   image: string;
   description: string;
   venueId: string;
+  ticketUrl?: string;
 }
 
 export interface Venue {

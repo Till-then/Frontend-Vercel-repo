@@ -8,6 +8,7 @@ import * as postsApi from '../api/posts';
 import * as usersApi from '../api/users';
 import * as showsApi from '../api/shows';
 import * as venuesApi from '../api/venues';
+import * as collectionsApi from '../api/collections';
 import { tokenStore } from '../lib/request';
 
 export interface User {
@@ -85,8 +86,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       const data = await showsApi.listShows();
       setShows(data);
     } catch {
-      // --- 原本地逻辑 ---
-      // setShows(MOCK_SHOWS);
       setShows([]);
     }
   }, []);
@@ -96,55 +95,69 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       const data = await venuesApi.listVenues();
       setVenues(data);
     } catch {
-      // --- 原本地逻辑 ---
-      // setVenues(MOCK_VENUES);
       setVenues([]);
     }
   }, []);
 
-  // 初始化：拉取帖子 / 关注列表（如果已登录）/ 演出 / 场馆
+  // 初始化：检查登录状态 / 拉取演出 / 场馆
   useEffect(() => {
-    // --- 原本地逻辑 ---
-    // setPosts(MOCK_POSTS);
-    // setFollowing([101]);
-    // setFollowers([102]);
-    // setShows(MOCK_SHOWS);
-    // setVenues(MOCK_VENUES);
+    // 检查本地是否有 token，如果有则恢复登录状态
+    const token = tokenStore.get();
+    if (token) {
+      authApi.getLoginUser()
+        .then(user => {
+          setCurrentUser(user);
+        })
+        .catch(() => {
+          // token 无效，清除
+          tokenStore.clear();
+          setCurrentUser(null);
+        });
+    }
 
-    postsApi
-      .listPosts()
-      .then(setPosts)
-      .catch(() => setPosts([]));
+    // --- 暂时关闭帖子接口 ---
+    // postsApi
+    //   .listPosts()
+    //   .then(setPosts)
+    //   .catch(() => setPosts([]));
 
     refreshShows();
     refreshVenues();
 
-    if (tokenStore.get()) {
-      Promise.all([usersApi.listFollowing(), usersApi.listFollowers()])
-        .then(([fg, fr]) => {
-          setFollowing(fg);
-          setFollowers(fr);
-        })
-        .catch(() => {
-          // --- 原本地逻辑 ---
-          // setFollowing([101]);
-          // setFollowers([102]);
-          setFollowing([]);
-          setFollowers([]);
-        });
-    } else {
-      // --- 原本地逻辑 ---
-      // setFollowing([101]);
-      // setFollowers([102]);
-      setFollowing([]);
-      setFollowers([]);
-    }
+    // --- 暂时关闭关注/粉丝接口 ---
+    // if (tokenStore.get()) {
+    //   Promise.all([usersApi.listFollowing(), usersApi.listFollowers()])
+    //     .then(([fg, fr]) => {
+    //       setFollowing(fg);
+    //       setFollowers(fr);
+    //     })
+    //     .catch(() => {
+    //       setFollowing([]);
+    //       setFollowers([]);
+    //     });
+    // } else {
+    //   setFollowing([]);
+    //   setFollowers([]);
+    // }
+
+    setPosts([]);
+    setFollowing([]);
+    setFollowers([]);
   }, [refreshShows, refreshVenues]);
 
   const toggleFavorite = (id: string) => {
+    const already = favorites.includes(id);
     setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
+      already ? prev.filter((fid) => fid !== id) : [...prev, id]
     );
+    if (currentUser) {
+      const fn = already ? collectionsApi.removeCollection : collectionsApi.addCollection;
+      fn(id).catch(() => {
+        setFavorites((prev) =>
+          already ? [...prev, id] : prev.filter((fid) => fid !== id)
+        );
+      });
+    }
   };
 
   const toggleReminder = (id: string) => {
@@ -182,19 +195,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
    */
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const { user } = await authApi.login({ username, password });
+      const { user } = await authApi.login({ userAccount: username, userPassword: password });
       setCurrentUser(user);
-      // 登录后刷新关注 / 粉丝
-      try {
-        const [fg, fr] = await Promise.all([
-          usersApi.listFollowing(),
-          usersApi.listFollowers(),
-        ]);
-        setFollowing(fg);
-        setFollowers(fr);
-      } catch {
-        /* ignore */
-      }
+
+      // --- 暂时关闭登录后拉取关注/粉丝 ---
+      // try {
+      //   const [fg, fr] = await Promise.all([
+      //     usersApi.listFollowing(),
+      //     usersApi.listFollowers(),
+      //   ]);
+      //   setFollowing(fg);
+      //   setFollowers(fr);
+      // } catch {
+      //   /* ignore */
+      // }
+
       return true;
     } catch {
       return false;
@@ -217,15 +232,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
    */
   const register = async (data: any): Promise<boolean> => {
     try {
-      const { user } = await authApi.register({
-        username: data.username,
-        password: data.password,
-        phone: data.phone,
-        email: data.email,
+      const result = await authApi.register({
+        userAccount: data.username,
+        userPassword: data.password,
+        checkPassword: data.confirmPassword ?? data.password,
       });
-      setCurrentUser(user);
-      return true;
-    } catch {
+
+      // 如果注册返回了用户信息和token，直接登录
+      if (result && result.user) {
+        setCurrentUser(result.user);
+        return true;
+      }
+
+      // 如果注册成功但没有返回用户信息，尝试自动登录
+      console.log('注册成功，尝试自动登录...');
+      const loginSuccess = await login(data.username, data.password);
+      return loginSuccess;
+    } catch (error) {
+      console.error('Register failed:', error);
       return false;
     }
   };
@@ -245,20 +269,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  /**
-   * 更新当前用户资料
-   * 真实后端：authApi.updateProfile
-   *
-   * --- 原本地逻辑 ---
-   * if (currentUser) setCurrentUser({ ...currentUser, ...data });
-   */
   const updateUser = async (data: Partial<User>) => {
     if (!currentUser) return;
     try {
       const updated = await authApi.updateProfile(data);
       setCurrentUser({ ...currentUser, ...updated, ...data });
     } catch {
-      // 失败时保持本地更新，避免阻塞 UI
       setCurrentUser({ ...currentUser, ...data });
     }
   };

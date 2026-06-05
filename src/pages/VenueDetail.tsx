@@ -1,34 +1,23 @@
-
-/**
- * ========================================
- * LiveJoy RESTful API 接口文档注释
- * ========================================
- *
- * === 场馆模块 (Venue Service) ===
- * GET    /api/venues/:id           - 获取场馆详情（含攻略信息）
- */
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-// --- 原本地逻辑（保留为注释，便于回退） ---
-// import { VENUES } from '../data/mockData';
 import { useAppContext } from '../context/AppContext';
-import { 
-  Bus, 
-  MapPin, 
-  Info, 
-  ChevronRight, 
-  ArrowLeft, 
-  Navigation, 
-  Clock, 
-  ShieldCheck, 
-  Coffee, 
-  Utensils, 
+import * as venuesApi from '../api/venues';
+import type { VenueStrategy, VenueCatering, VenueAccommodation } from '../api/venues';
+import {
+  Bus,
+  MapPin,
+  Info,
+  ChevronRight,
+  ArrowLeft,
+  Navigation,
+  Clock,
+  ShieldCheck,
+  Coffee,
+  Utensils,
   Hotel,
   Music2,
   Users,
   MessageSquare,
-  Calendar,
   Building2,
   CheckCircle2,
   Heart
@@ -38,11 +27,19 @@ const VenueDetail: React.FC = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
-  // 真实后端：场馆与帖子均来自 AppContext（GET /venues、GET /posts）
-  // --- 原本地逻辑 ---
-  // const venue = VENUES.find(v => v.id === id) || VENUES[0];
   const { posts, venues } = useAppContext();
   const venue = venues.find(v => v.id === id) || venues[0];
+
+  const [strategies, setStrategies] = useState<VenueStrategy[]>([]);
+  const [caterings, setCaterings] = useState<VenueCatering[]>([]);
+  const [accommodations, setAccommodations] = useState<VenueAccommodation[]>([]);
+
+  useEffect(() => {
+    if (!venue?.id) return;
+    venuesApi.getVenueStrategies(venue.id).then(setStrategies).catch(() => setStrategies([]));
+    venuesApi.getVenueCaterings(venue.id).then(setCaterings).catch(() => setCaterings([]));
+    venuesApi.getVenueAccommodations(venue.id).then(setAccommodations).catch(() => setAccommodations([]));
+  }, [venue?.id]);
 
   if (!venue) {
     return (
@@ -205,7 +202,87 @@ const VenueDetail: React.FC = () => {
             </div>
           </section>
 
-          {/* Surroundings Entry */}
+          {/* Strategies */}
+          {strategies.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                  <Info size={28} />
+                </div>
+                周边攻略
+              </h2>
+              <div className="space-y-4">
+                {strategies.map(s => (
+                  <div key={s.strategyId} className="bg-gray-50 rounded-[24px] border border-gray-100 p-6 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs font-bold rounded-lg">{s.type}</span>
+                      <h4 className="font-bold text-gray-900">{s.title}</h4>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">{s.content}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Caterings */}
+          {caterings.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+                <div className="w-12 h-12 bg-brand-amber/10 rounded-2xl flex items-center justify-center text-brand-amber">
+                  <Utensils size={28} />
+                </div>
+                周边餐饮
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {caterings.map(c => (
+                  <div key={c.cateringId} className="bg-gray-50 rounded-[24px] border border-gray-100 p-5 flex items-center gap-4">
+                    <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-amber shadow-sm flex-shrink-0">
+                      <Coffee size={20} />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 text-sm">{c.name}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-gray-500">{c.type}</span>
+                        {c.isNightSnack && <span className="px-2 py-0.5 bg-brand-amber/10 text-brand-amber text-xs font-bold rounded-lg">宵夜</span>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Accommodations */}
+          {accommodations.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+                <div className="w-12 h-12 bg-brand-purple/10 rounded-2xl flex items-center justify-center text-brand-purple">
+                  <Hotel size={28} />
+                </div>
+                周边住宿
+              </h2>
+              <div className="space-y-4">
+                {accommodations.map(a => (
+                  <div key={a.accommId} className="bg-gray-50 rounded-[24px] border border-gray-100 p-5 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-purple shadow-sm flex-shrink-0">
+                        <Hotel size={20} />
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900 text-sm">{a.name}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{a.address}</p>
+                      </div>
+                    </div>
+                    <span className="text-primary font-black text-sm whitespace-nowrap">¥{a.priceRange}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Surroundings Entry - show only when no real data */}
+          {strategies.length === 0 && caterings.length === 0 && accommodations.length === 0 && (
           <section className="p-10 bg-gray-900 rounded-[40px] text-white relative overflow-hidden">
             <div className="relative z-10 max-w-lg space-y-6">
               <h2 className="text-3xl font-black">探索周边玩乐</h2>
@@ -227,6 +304,7 @@ const VenueDetail: React.FC = () => {
               <Music2 className="w-full h-full p-8" />
             </div>
           </section>
+          )}
         </div>
 
         {/* Right Sidebar */}

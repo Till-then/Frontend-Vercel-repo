@@ -1,19 +1,15 @@
 import { http, tokenStore } from '../lib/request';
 import type { User } from '../context/AppContext';
 
-// --- 原本地逻辑依赖（保留为注释，便于回退到 mock） ---
-// import { USE_MOCK } from '../lib/request';
-
 export interface LoginPayload {
-  username: string;
-  password: string;
+  userAccount: string;
+  userPassword: string;
 }
 
 export interface RegisterPayload {
-  username: string;
-  password: string;
-  phone: string;
-  email: string;
+  userAccount: string;
+  userPassword: string;
+  checkPassword: string;
 }
 
 export interface AuthResult {
@@ -21,103 +17,66 @@ export interface AuthResult {
   token: string;
 }
 
-/**
- * 登录
- * 真实后端：POST /auth/login -> { user, token }
- *
- * --- 原本地测试逻辑（保留作 fallback / 单测参考） ---
- * if (USE_MOCK) {
- *   const { username, password } = payload;
- *   if (username === 'admin' && password === 'admin123') {
- *     const result: AuthResult = {
- *       user: {
- *         id: 0, username: 'Admin', phone: '13800000000',
- *         email: 'admin@livejoy.com',
- *         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',
- *         isLoggedIn: true, role: 'admin',
- *       },
- *       token: 'mock-admin-token',
- *     };
- *     tokenStore.set(result.token);
- *     return result;
- *   }
- *   if (username && password.length >= 6) {
- *     const result: AuthResult = {
- *       user: {
- *         id: 1, username, phone: '13812345678',
- *         email: `${username}@example.com`,
- *         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`,
- *         isLoggedIn: true, role: 'user',
- *       },
- *       token: 'mock-user-token',
- *     };
- *     tokenStore.set(result.token);
- *     return result;
- *   }
- *   throw new Error('用户名或密码错误');
- * }
- */
 export async function login(payload: LoginPayload): Promise<AuthResult> {
-  const result = await http.post<AuthResult>('/auth/login', payload);
-  tokenStore.set(result.token);
-  return result;
+  const result = await http.post<any>('/api/user/login', payload);
+
+  // 处理不同的响应格式
+  let user, token;
+
+  if (result.user && result.token) {
+    user = result.user;
+    token = result.token;
+  } else if (result.data) {
+    user = result.data.user || result.data;
+    token = result.data.token;
+  } else {
+    user = result;
+    token = result.token || '';
+  }
+
+  if (token) {
+    tokenStore.set(token);
+  }
+
+  return { user, token };
 }
 
-/**
- * 注册
- * 真实后端：POST /auth/register -> { user, token }
- *
- * --- 原本地测试逻辑 ---
- * if (USE_MOCK) {
- *   const result: AuthResult = {
- *     user: {
- *       id: Date.now(),
- *       username: payload.username,
- *       phone: payload.phone,
- *       email: payload.email,
- *       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${payload.username}`,
- *       isLoggedIn: true,
- *       role: 'user',
- *     },
- *     token: 'mock-register-token',
- *   };
- *   tokenStore.set(result.token);
- *   return result;
- * }
- */
 export async function register(payload: RegisterPayload): Promise<AuthResult> {
-  const result = await http.post<AuthResult>('/auth/register', payload);
-  tokenStore.set(result.token);
-  return result;
+  const result = await http.post<any>('/api/user/register', payload);
+
+  // 处理不同的响应格式
+  let user, token;
+
+  if (result.user && result.token) {
+    user = result.user;
+    token = result.token;
+  } else if (result.data) {
+    user = result.data.user || result.data;
+    token = result.data.token;
+  } else {
+    user = result;
+    token = result.token || '';
+  }
+
+  if (token) {
+    tokenStore.set(token);
+  }
+
+  return { user, token };
 }
 
-/**
- * 退出登录
- * 真实后端：POST /auth/logout
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) {
- *   tokenStore.clear();
- *   return;
- * }
- */
 export async function logout(): Promise<void> {
   try {
-    await http.post('/auth/logout');
+    await http.post('/api/user/logout');
   } finally {
     tokenStore.clear();
   }
 }
 
-/**
- * 更新当前用户资料
- * 真实后端：PATCH /auth/me -> User
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) {
- *   return { ...(data as User) };
- * }
- */
+export async function getLoginUser(): Promise<User> {
+  return http.get<User>('/api/user/get/login');
+}
+
 export async function updateProfile(data: Partial<User>): Promise<User> {
-  return http.patch<User>('/auth/me', data);
+  return http.post<User>('/api/user/update/my', data);
 }

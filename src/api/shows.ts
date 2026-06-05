@@ -1,80 +1,83 @@
 import { http } from '../lib/request';
 import type { Show } from '../data/mockData';
 
-// --- 原本地逻辑依赖（保留为注释，便于回退到 mock 数据） ---
-// import { USE_MOCK } from '../lib/request';
-// import { SHOWS } from '../data/mockData';
-
 export interface ShowQuery {
   city?: string;
-  type?: Show['type'];
+  type?: string;
   keyword?: string;
+  page?: number;
+  size?: number;
 }
 
-/**
- * 演出列表
- * 真实后端：GET /shows
- *
- * --- 原本地逻辑（保留为注释方案） ---
- * if (USE_MOCK) {
- *   let data = SHOWS.slice();
- *   if (query?.city) data = data.filter((s) => s.city === query.city);
- *   if (query?.type) data = data.filter((s) => s.type === query.type);
- *   if (query?.keyword) {
- *     const k = query.keyword.toLowerCase();
- *     data = data.filter(
- *       (s) =>
- *         s.title.toLowerCase().includes(k) ||
- *         s.artist.toLowerCase().includes(k)
- *     );
- *   }
- *   return data;
- * }
- */
+// 后端字段 → 前端 Show 字段映射
+function mapPerformance(p: any): Show {
+  return {
+    id: String(p.performanceId ?? p.id),
+    title: p.title,
+    artist: p.singer ?? p.artist ?? '',
+    date: p.startTime ?? p.date ?? '',
+    venue: p.venue ?? '',
+    city: p.city ?? '',
+    type: mapType(p.type),
+    price: p.price ?? 0,
+    status: p.status === 0 ? '已售罄' : (p.status === 2 ? '即将开票' : '售票中'),
+    image: p.posterUrl ?? p.image ?? '',
+    description: p.description ?? '',
+    venueId: String(p.venueId ?? ''),
+    ticketUrl: p.ticketUrl,
+  } as Show;
+}
+
+function mapType(t: string): Show['type'] {
+  const map: Record<string, Show['type']> = {
+    Concert: '演唱会',
+    LiveHouse: 'Livehouse',
+    MusicFestival: '音乐节',
+  };
+  return map[t] ?? (t as Show['type']) ?? '演唱会';
+}
+
 export async function listShows(query?: ShowQuery): Promise<Show[]> {
-  return http.get<Show[]>('/shows', query as Record<string, string | undefined>);
+  const res = await http.get<any>('/api/performances', query as Record<string, any>);
+  const list = Array.isArray(res) ? res : (res?.list ?? res?.records ?? []);
+  return list.map(mapPerformance);
 }
 
-/**
- * 演出详情
- * 真实后端：GET /shows/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return SHOWS.find((s) => s.id === id);
- */
 export async function getShow(id: string): Promise<Show | undefined> {
-  return http.get<Show>(`/shows/${id}`);
+  const p = await http.get<any>(`/api/performances/${id}`);
+  return p ? mapPerformance(p) : undefined;
 }
 
-/**
- * 创建演出（后台）
- * 真实后端：POST /admin/shows
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return { ...payload, id: `s${Date.now()}` };
- */
 export async function createShow(payload: Omit<Show, 'id'>): Promise<Show> {
-  return http.post<Show>('/admin/shows', payload);
+  const p = await http.post<any>('/api/performances', mapToBackend(payload));
+  return mapPerformance(p);
 }
 
-/**
- * 更新演出（后台）
- * 真实后端：PUT /admin/shows/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return { ...(payload as Show), id };
- */
 export async function updateShow(id: string, payload: Partial<Show>): Promise<Show> {
-  return http.put<Show>(`/admin/shows/${id}`, payload);
+  const p = await http.put<any>(`/api/performances/${id}`, mapToBackend(payload));
+  return mapPerformance(p);
 }
 
-/**
- * 删除演出（后台）
- * 真实后端：DELETE /admin/shows/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return;
- */
 export async function deleteShow(id: string): Promise<void> {
-  return http.del<void>(`/admin/shows/${id}`);
+  return http.del<void>(`/api/performances/${id}`);
+}
+
+function mapToBackend(s: Partial<Show>): Record<string, unknown> {
+  const typeMap: Record<string, string> = {
+    '演唱会': 'Concert',
+    'Livehouse': 'LiveHouse',
+    '音乐节': 'MusicFestival',
+  };
+  return {
+    title: s.title,
+    singer: s.artist,
+    startTime: s.date,
+    venue: s.venue,
+    city: s.city,
+    type: s.type ? (typeMap[s.type] ?? s.type) : undefined,
+    price: s.price,
+    posterUrl: s.image,
+    description: s.description,
+    venueId: s.venueId,
+  };
 }

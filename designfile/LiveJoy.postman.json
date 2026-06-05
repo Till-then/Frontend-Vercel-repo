@@ -1,0 +1,2128 @@
+{
+    "info": {
+        "name": "LiveJoy",
+        "description": "",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "用户相关",
+            "description": "",
+            "item": [
+                {
+                    "name": "普通用户（暂未测试）",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "用户注册",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/register",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "register"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/register",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "register"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "用户登录",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/login",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "login"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "admin",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/login",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "login"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                },
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/login",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "login"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "更新当前用户信息",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/update/my",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "update",
+                                        "my"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/update/my",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "update",
+                                                "my"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "退出登录",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/logout",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "logout"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/logout",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "logout"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "获取当前登录用户信息",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/get/login",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "get",
+                                        "login"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/get/login",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "get",
+                                                "login"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        }
+                    ],
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {}
+                },
+                {
+                    "name": "管理员（暂不使用）",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "管理员-更新用户信息",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/update",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "update"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/update",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "update"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "管理员-创建用户",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/add",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "add"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/add",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "add"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "管理员-删除用户",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/delete",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "delete"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/delete",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "delete"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "管理员-根据ID获取用户详情",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/get",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "get"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "id",
+                                            "description": "id",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/get",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "get"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [
+                                                {
+                                                    "key": "id",
+                                                    "value": "",
+                                                    "description": "id",
+                                                    "disabled": false
+                                                }
+                                            ],
+                                            "variable": []
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "根据 id 获取包装类",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/get/vo",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "get",
+                                        "vo"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "id",
+                                            "description": "id",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/get/vo",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "get",
+                                                "vo"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [
+                                                {
+                                                    "key": "id",
+                                                    "value": "",
+                                                    "description": "id",
+                                                    "disabled": false
+                                                }
+                                            ],
+                                            "variable": []
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "分页获取用户列表（脱敏）",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/list/page/vo",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "list",
+                                        "page",
+                                        "vo"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/list/page/vo",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "list",
+                                                "page",
+                                                "vo"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "管理员-分页获取用户列表",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/user/list/page",
+                                    "path": [
+                                        "api",
+                                        "user",
+                                        "list",
+                                        "page"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/user/list/page",
+                                            "path": [
+                                                "api",
+                                                "user",
+                                                "list",
+                                                "page"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        }
+                    ],
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {}
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        },
+        {
+            "name": "演出相关",
+            "description": "",
+            "item": [
+                {
+                    "name": "管理端（暂不使用）",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "添加演出",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/performances",
+                                    "path": [
+                                        "api",
+                                        "performances"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/performances",
+                                            "path": [
+                                                "api",
+                                                "performances"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "修改演出信息",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "PUT",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/performances/:performanceId",
+                                    "path": [
+                                        "api",
+                                        "performances",
+                                        ":performanceId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "performanceId",
+                                            "value": "",
+                                            "description": "performanceId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "PUT",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/performances/:performanceId",
+                                            "path": [
+                                                "api",
+                                                "performances",
+                                                ":performanceId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "performanceId",
+                                                    "value": "",
+                                                    "description": "performanceId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "删除演出",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "DELETE",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/performances/:performanceId",
+                                    "path": [
+                                        "api",
+                                        "performances",
+                                        ":performanceId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "performanceId",
+                                            "value": "",
+                                            "description": "performanceId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/performances/:performanceId",
+                                            "path": [
+                                                "api",
+                                                "performances",
+                                                ":performanceId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "performanceId",
+                                                    "value": "",
+                                                    "description": "performanceId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        }
+                    ],
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {}
+                },
+                {
+                    "name": "根据ID获取演出详情",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/performances/:performanceId",
+                            "path": [
+                                "api",
+                                "performances",
+                                ":performanceId"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "performanceId",
+                                    "value": "",
+                                    "description": "performanceId",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/performances/:performanceId",
+                                    "path": [
+                                        "api",
+                                        "performances",
+                                        ":performanceId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "performanceId",
+                                            "value": "",
+                                            "description": "performanceId",
+                                            "disabled": false
+                                        }
+                                    ]
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "获取演出列表",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/performances",
+                            "path": [
+                                "api",
+                                "performances"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "city",
+                                    "description": "city",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "keyword",
+                                    "description": "keyword",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "type",
+                                    "description": "type",
+                                    "type": "string"
+                                }
+                            ],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/performances",
+                                    "path": [
+                                        "api",
+                                        "performances"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "city",
+                                            "value": "",
+                                            "description": "city",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "keyword",
+                                            "value": "",
+                                            "description": "keyword",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "type",
+                                            "value": "",
+                                            "description": "type",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        },
+        {
+            "name": "场馆相关",
+            "description": "",
+            "item": [
+                {
+                    "name": "管理端（暂不使用）",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "添加场馆",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues",
+                                    "path": [
+                                        "api",
+                                        "venues"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "POST",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues",
+                                            "path": [
+                                                "api",
+                                                "venues"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "删除场馆",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "DELETE",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues/:venueId",
+                                            "path": [
+                                                "api",
+                                                "venues",
+                                                ":venueId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "venueId",
+                                                    "value": "",
+                                                    "description": "venueId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "修改场馆信息",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "PUT",
+                                "body": {
+                                    "mode": "raw",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "PUT",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues/:venueId",
+                                            "path": [
+                                                "api",
+                                                "venues",
+                                                ":venueId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "venueId",
+                                                    "value": "",
+                                                    "description": "venueId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "text"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        }
+                    ],
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {}
+                },
+                {
+                    "name": "场馆周边娱乐接口暂未测试",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "获取场馆周边住宿推荐",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId/accommodations",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId",
+                                        "accommodations"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues/:venueId/accommodations",
+                                            "path": [
+                                                "api",
+                                                "venues",
+                                                ":venueId",
+                                                "accommodations"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "venueId",
+                                                    "value": "",
+                                                    "description": "venueId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "获取场馆周边游玩攻略",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId/strategies",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId",
+                                        "strategies"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues/:venueId/strategies",
+                                            "path": [
+                                                "api",
+                                                "venues",
+                                                ":venueId",
+                                                "strategies"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "key": "venueId",
+                                                    "value": "",
+                                                    "description": "venueId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        },
+                        {
+                            "name": "获取场馆周边餐饮推荐",
+                            "description": "",
+                            "event": [],
+                            "auth": {},
+                            "request": {
+                                "auth": {},
+                                "method": "GET",
+                                "body": {},
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId/caterings",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId",
+                                        "caterings"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "isNightSnack",
+                                            "description": "isNightSnack",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": [
+                                {
+                                    "name": "成功",
+                                    "originalRequest": {
+                                        "method": "GET",
+                                        "header": [],
+                                        "url": {
+                                            "raw": "{{baseUrl}}/api/venues/:venueId/caterings",
+                                            "path": [
+                                                "api",
+                                                "venues",
+                                                ":venueId",
+                                                "caterings"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [
+                                                {
+                                                    "key": "isNightSnack",
+                                                    "value": "",
+                                                    "description": "isNightSnack",
+                                                    "disabled": false
+                                                }
+                                            ],
+                                            "variable": [
+                                                {
+                                                    "key": "venueId",
+                                                    "value": "",
+                                                    "description": "venueId",
+                                                    "disabled": false
+                                                }
+                                            ]
+                                        },
+                                        "body": {}
+                                    },
+                                    "cookie": []
+                                }
+                            ],
+                            "protocolProfileBehavior": {
+                                "strictSSL": false,
+                                "followRedirects": true
+                            }
+                        }
+                    ],
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        },
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [],
+                                "type": "text/javascript",
+                                "packages": {}
+                            }
+                        }
+                    ],
+                    "auth": {}
+                },
+                {
+                    "name": "获取所有场馆列表",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/venues",
+                            "path": [
+                                "api",
+                                "venues"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues",
+                                    "path": [
+                                        "api",
+                                        "venues"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "根据ID获取场馆详情",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "GET",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/venues/:venueId",
+                            "path": [
+                                "api",
+                                "venues",
+                                ":venueId"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "venueId",
+                                    "value": "",
+                                    "description": "venueId",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/venues/:venueId",
+                                    "path": [
+                                        "api",
+                                        "venues",
+                                        ":venueId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "key": "venueId",
+                                            "value": "",
+                                            "description": "venueId",
+                                            "disabled": false
+                                        }
+                                    ]
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        },
+        {
+            "name": "收藏相关（暂未测试）",
+            "description": "",
+            "item": [
+                {
+                    "name": "addCollection",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/collections",
+                            "path": [
+                                "api",
+                                "collections"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/collections",
+                                    "path": [
+                                        "api",
+                                        "collections"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "",
+                                    "options": {
+                                        "raw": {
+                                            "language": "text"
+                                        }
+                                    }
+                                }
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "deleteCollection",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {},
+                        "method": "DELETE",
+                        "body": {},
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/collections/:performanceId",
+                            "path": [
+                                "api",
+                                "collections",
+                                ":performanceId"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "description": "userId",
+                                    "type": "string"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "performanceId",
+                                    "value": "",
+                                    "description": "performanceId",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "成功",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/collections/:performanceId",
+                                    "path": [
+                                        "api",
+                                        "collections",
+                                        ":performanceId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "userId",
+                                            "value": "",
+                                            "description": "userId",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "performanceId",
+                                            "value": "",
+                                            "description": "performanceId",
+                                            "disabled": false
+                                        }
+                                    ]
+                                },
+                                "body": {}
+                            },
+                            "cookie": []
+                        }
+                    ],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {}
+        }
+    ],
+    "variable": [],
+    "event": [],
+    "auth": {}
+}

@@ -1,77 +1,97 @@
 import { http } from '../lib/request';
 import type { Venue } from '../data/mockData';
 
-// --- 原本地逻辑依赖（保留为注释，便于回退到 mock 数据） ---
-// import { USE_MOCK } from '../lib/request';
-// import { VENUES } from '../data/mockData';
-
 export interface VenueQuery {
   city?: string;
   keyword?: string;
 }
 
-/**
- * 场馆列表
- * 真实后端：GET /venues
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) {
- *   let data = VENUES.slice();
- *   if (query?.city) data = data.filter((v) => v.city === query.city);
- *   if (query?.keyword) {
- *     const k = query.keyword.toLowerCase();
- *     data = data.filter(
- *       (v) =>
- *         v.name.toLowerCase().includes(k) || v.address.toLowerCase().includes(k)
- *     );
- *   }
- *   return data;
- * }
- */
+export interface VenueStrategy {
+  strategyId: string;
+  title: string;
+  type: string;
+  content: string;
+}
+
+export interface VenueCatering {
+  cateringId: string;
+  name: string;
+  type: string;
+  isNightSnack: boolean;
+}
+
+export interface VenueAccommodation {
+  accommId: string;
+  name: string;
+  address: string;
+  priceRange: string;
+}
+
+function mapVenue(v: any): Venue {
+  return {
+    id: String(v.venueId ?? v.id),
+    name: v.venueName ?? v.name ?? '',
+    city: v.city ?? '',
+    address: v.address ?? '',
+    image: v.image ?? '',
+    coordinates: v.location
+      ? { lat: v.location.latitude, lng: v.location.longitude }
+      : (v.coordinates ?? { lat: 0, lng: 0 }),
+    transport: [v.metroInfo, v.busInfo].filter(Boolean).join('\n') || v.transport || '',
+    notice: v.admissionRules ?? v.notice ?? '',
+    facilities: v.facilities ?? [],
+    lastBus: v.lastBus ?? '',
+    capacity: v.capacity,
+    description: v.description,
+  };
+}
+
 export async function listVenues(query?: VenueQuery): Promise<Venue[]> {
-  return http.get<Venue[]>('/venues', query as Record<string, string | undefined>);
+  const res = await http.get<any>('/api/venues', query as Record<string, any>);
+  const list = Array.isArray(res) ? res : (res?.list ?? res?.records ?? []);
+  return list.map(mapVenue);
 }
 
-/**
- * 场馆详情
- * 真实后端：GET /venues/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return VENUES.find((v) => v.id === id);
- */
 export async function getVenue(id: string): Promise<Venue | undefined> {
-  return http.get<Venue>(`/venues/${id}`);
+  const v = await http.get<any>(`/api/venues/${id}`);
+  return v ? mapVenue(v) : undefined;
 }
 
-/**
- * 创建场馆（后台）
- * 真实后端：POST /admin/venues
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return { ...payload, id: `v${Date.now()}` };
- */
+export async function getVenueStrategies(venueId: string): Promise<VenueStrategy[]> {
+  return http.get<VenueStrategy[]>(`/api/venues/${venueId}/strategies`);
+}
+
+export async function getVenueCaterings(venueId: string, isNightSnack?: boolean): Promise<VenueCatering[]> {
+  return http.get<VenueCatering[]>(`/api/venues/${venueId}/caterings`, isNightSnack !== undefined ? { isNightSnack } : undefined);
+}
+
+export async function getVenueAccommodations(venueId: string): Promise<VenueAccommodation[]> {
+  return http.get<VenueAccommodation[]>(`/api/venues/${venueId}/accommodations`);
+}
+
 export async function createVenue(payload: Omit<Venue, 'id'>): Promise<Venue> {
-  return http.post<Venue>('/admin/venues', payload);
+  const v = await http.post<any>('/api/venues', mapToBackend(payload));
+  return mapVenue(v);
 }
 
-/**
- * 更新场馆（后台）
- * 真实后端：PUT /admin/venues/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return { ...(payload as Venue), id };
- */
 export async function updateVenue(id: string, payload: Partial<Venue>): Promise<Venue> {
-  return http.put<Venue>(`/admin/venues/${id}`, payload);
+  const v = await http.put<any>(`/api/venues/${id}`, mapToBackend(payload));
+  return mapVenue(v);
 }
 
-/**
- * 删除场馆（后台）
- * 真实后端：DELETE /admin/venues/:id
- *
- * --- 原本地逻辑 ---
- * if (USE_MOCK) return;
- */
 export async function deleteVenue(id: string): Promise<void> {
-  return http.del<void>(`/admin/venues/${id}`);
+  return http.del<void>(`/api/venues/${id}`);
+}
+
+function mapToBackend(v: Partial<Venue>): Record<string, unknown> {
+  return {
+    venueName: v.name,
+    city: v.city,
+    address: v.address,
+    transport: v.transport,
+    notice: v.notice,
+    image: v.image,
+    capacity: v.capacity,
+    description: v.description,
+  };
 }

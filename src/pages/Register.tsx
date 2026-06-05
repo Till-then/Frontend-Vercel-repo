@@ -1,30 +1,18 @@
-
-/**
- * ========================================
- * LiveJoy RESTful API 接口文档注释
- * ========================================
- *
- * === 用户模块 (User Service) ===
- * POST   /api/user/register       - 用户注册
- */
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { Music2, User, Lock, Eye, EyeOff, ArrowLeft, Mail, Phone } from 'lucide-react';
+import { Music2, User, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 const Register: React.FC = () => {
   const { register } = useAppContext();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     username: '',
-    phone: '',
-    email: '',
     password: '',
     confirmPassword: ''
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
@@ -34,42 +22,32 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.username || !formData.phone || !formData.email || !formData.password) {
+
+    if (!formData.username || !formData.password) {
       setError('请填写完整信息');
       return;
     }
-    
+
     if (formData.username.length < 2) {
       setError('用户名至少2个字符');
       return;
     }
-    
-    if (!/^\d{11}$/.test(formData.phone)) {
-      setError('请输入正确的11位手机号');
-      return;
-    }
-    
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('请输入正确的邮箱格式');
-      return;
-    }
-    
+
     if (formData.password.length < 6) {
       setError('密码至少6位');
       return;
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       setError('两次密码输入不一致');
       return;
     }
-    
+
     const success = await register(formData);
     if (success) {
       navigate('/');
     } else {
-      setError('注册失败，请稍后重试');
+      setError('注册失败，用户名可能已存在');
     }
   };
 
@@ -105,36 +83,6 @@ const Register: React.FC = () => {
                   value={formData.username}
                   onChange={handleChange}
                   placeholder="2-20个字符"
-                  className="w-full h-11 pl-12 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-gray-700 ml-1">手机号</label>
-              <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="11位手机号"
-                  className="w-full h-11 pl-12 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-gray-700 ml-1">电子邮箱</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="example@livejoy.com"
                   className="w-full h-11 pl-12 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 />
               </div>
@@ -194,7 +142,7 @@ const Register: React.FC = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-center">
           <Link to="/" className="text-sm text-gray-500 hover:text-gray-800 flex items-center gap-1 transition-colors">
             <ArrowLeft size={14} />
