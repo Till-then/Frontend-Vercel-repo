@@ -1,0 +1,46 @@
+# frontend/.gitlab-ci.yml
+
+stages:
+  - build
+  - deploy
+
+variables:
+  SERVER_IP: "116.62.78.157"
+  SERVER_USER: "root"
+  DEPLOY_PATH: "/opt/frontend/"
+
+# 构建阶段
+build:
+  stage: build
+  image: node:18-alpine
+  script:
+    - echo "🔨 开始构建前端项目..."
+    - npm install
+    - npm run build
+    - echo "✅ 前端构建完成！"
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+# 部署阶段
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+  script:
+    - echo "🚀 开始部署前端..."
+    - scp -r dist/* $SERVER_USER@$SERVER_IP:$DEPLOY_PATH
+    - echo "✅ 前端部署完成！"
+  only:
+    - main
+
+# 缓存配置
+cache:
+  paths:
+    - node_modules/
